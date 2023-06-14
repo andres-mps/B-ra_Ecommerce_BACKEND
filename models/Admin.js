@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 
-class User extends Model {
+class Admin extends Model {
   static initModel(sequelize) {
-    User.init(
+    Admin.init(
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
@@ -26,20 +26,14 @@ class User extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        address: {
-          type: DataTypes.STRING,
-        },
-        phone: {
-          type: DataTypes.STRING,
-        },
       },
       {
         sequelize,
-        modelName: "user",
+        modelName: "admin",
       },
     );
-    return User;
+    return Admin;
   }
 }
 
-module.exports = User;
+module.exports = Admin;

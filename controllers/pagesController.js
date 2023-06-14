@@ -16,10 +16,10 @@
  * no debería existir.
  */
 
-const { Article } = require("../models");
+const { Product } = require("../models");
 
 async function showHome(req, res) {
-  const articles = await Article.findAll();
+  const articles = await Product.findAll();
   res.render("home", { articles });
 }
 
