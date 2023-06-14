@@ -12,7 +12,7 @@ module.exports = async () => {
       price: 45,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/dipa.jpg?v=1663749590&width=1100",
-      featured: false,
+      featured: true,
       active: true,
       slug: "",
       categoryId: "1",
@@ -27,7 +27,7 @@ module.exports = async () => {
       price: 30,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/House-Of-Pale.jpg?v=1655280792&width=1100",
-      featured: false,
+      featured: true,
       active: true,
       slug: "",
       categoryId: "2",
@@ -42,7 +42,7 @@ module.exports = async () => {
       price: 45,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/SantaGosePastryEdition.jpg?v=1663572145&width=600",
-      featured: false,
+      featured: true,
       active: true,
       slug: "",
       categoryId: "3",
@@ -57,7 +57,7 @@ module.exports = async () => {
       price: 45,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/Gelateria.jpg?v=1653042380&width=600",
-      featured: false,
+      featured: true,
       active: true,
       slug: "",
       categoryId: "4",
