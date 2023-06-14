@@ -14,7 +14,10 @@ async function showAboutUs(req, res) {
 }
 
 async function featuredProducts(req, res) {
-  const products = await Product.findAll({ where: { featured: 1 }, include: { model: Category } });
+  const products = await Product.findAll({
+    where: { featured: 1 },
+    include: { model: Category, attributes: ["id", "name"] },
+  });
   res.json(products);
 }
 
