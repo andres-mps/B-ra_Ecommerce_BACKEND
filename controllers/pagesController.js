@@ -22,7 +22,9 @@ async function featuredProducts(req, res) {
 }
 
 async function categories(req, res) {
-  const categories = await Category.findAll();
+  const categories = await Category.findAll({
+    include: [{ model: Product, attributes: ["id", "name"] }],
+  });
   res.json(categories);
 }
 
