@@ -3,7 +3,7 @@ const { Product } = require("../models");
 module.exports = async () => {
   const products = [
     {
-      name: "#DIPA",
+      name: "Action Direct",
       description:
         "#DIPA is coming into our core range! After having so much fun with our numbered #DIPA series, we thought we'd bring the ol' girl home to stay and find a forever home. The mother of all DIPAs, dry-hopped to the brim with Cascade Citra and Simcoe perfectly balanced by pilsner malts, wheat, and flaked oat.",
       abv: "8.7%",
@@ -11,7 +11,52 @@ module.exports = async () => {
       stock: 10,
       price: 45,
       image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/dipa.jpg?v=1663749590&width=1100",
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/Action-Directe_44cl_can.jpg?v=1685094260&width=360",
+      featured: true,
+      active: true,
+      slug: "",
+      categoryId: "1",
+    },
+    {
+      name: "Trouble Juice",
+      description:
+        "This is a beer designed with the Norwegian market in mind. It is a slightly fruity session IPA, reminiscent of Snublejuice and featuring apricot (with a touch of pineapple to boost the experience). It features some extra fruity hops - El Dorado, Simcoe, Cascade, and Ekuanot, and is meant to be mostly bright.",
+      abv: "4.7%",
+      size: "44 CL",
+      stock: 10,
+      price: 36,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/TroubleJuice-44cl.jpg?v=1683707133&width=823",
+      featured: true,
+      active: true,
+      slug: "",
+      categoryId: "1",
+    },
+    {
+      name: "Brokilde Brown",
+      description:
+        "An organic Belgian brown ale with light flavors of clove and banana from the yeast, and a prominent caramel and chocolate malt profile from a variety of darker malts. It uses German noble hops for a hint of spiciness.",
+      abv: "6.5%",
+      size: "44 CL",
+      stock: 10,
+      price: 36,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/brokilde-brown.jpg?v=1683706583&width=823",
+      featured: true,
+      active: true,
+      slug: "",
+      categoryId: "1",
+    },
+    {
+      name: "Sovs",
+      description:
+        "This is a new juicy IPA from To Øl, with support from some trials at BRUS. This beer uses a fairly neutral yeast, so the main focus of the beer is the hops - a juicy combination of Ekuanot and citra, with idaho gem as a supporting partner. Hop gravy!",
+      abv: "6%",
+      size: "44 CL",
+      stock: 10,
+      price: 36,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/sovs.jpg?v=1683705460&width=823",
       featured: true,
       active: true,
       slug: "",
@@ -42,7 +87,7 @@ module.exports = async () => {
       price: 45,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/SantaGosePastryEdition.jpg?v=1663572145&width=600",
-      featured: true,
+      featured: false,
       active: true,
       slug: "",
       categoryId: "2",
@@ -72,7 +117,7 @@ module.exports = async () => {
       price: 40,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/trouble-sleep.jpg?v=1661777425&width=1100",
-      featured: true,
+      featured: false,
       active: true,
       slug: "",
       categoryId: "3",
@@ -102,7 +147,7 @@ module.exports = async () => {
       price: 32.8,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45_days_rice_lager.jpg?v=1674046463&width=1100",
-      featured: true,
+      featured: false,
       active: true,
       slug: "",
       categoryId: "4",
