@@ -27,10 +27,10 @@ module.exports = async () => {
       price: 30,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/House-Of-Pale.jpg?v=1655280792&width=1100",
-      featured: true,
+      featured: false,
       active: true,
       slug: "",
-      categoryId: "2",
+      categoryId: "1",
     },
     {
       name: "Santa Gose F* It all Pastry Edition",
@@ -45,7 +45,7 @@ module.exports = async () => {
       featured: true,
       active: true,
       slug: "",
-      categoryId: "3",
+      categoryId: "2",
     },
     {
       name: "Gelateria Gelato Summer Gose",
@@ -57,7 +57,67 @@ module.exports = async () => {
       price: 45,
       image:
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/Gelateria.jpg?v=1653042380&width=600",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "2",
+    },
+    {
+      name: "Trouble Sleep",
+      description:
+        "Malty, roasted, sweet taste with hints of espresso coffee, pepper, rum raisin, marzipan, coconut, and dark chocolate. Served at 12-14°C with chocolate desserts, or as a companion drink.",
+      abv: "12%",
+      size: "33 CL",
+      stock: 10,
+      price: 40,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/trouble-sleep.jpg?v=1661777425&width=1100",
       featured: true,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "Peel the burn",
+      description:
+        "This is an imperial stout with eight different types of malt that pushes all the boundaries - a little bit sweet, a little bit smoky, a little roasty, and a lot of chocolate with added roasted orange peel and cardamom.",
+      abv: "12.2%",
+      size: "33 CL",
+      stock: 10,
+      price: 39.2,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/PeelTheBurn.jpg?v=1679910364&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "45 Days Rice Lager",
+      description:
+        "This is a Japanese-style lager - super clean and crisp with nothing but pilsner malt and rice in it. We used some interesting noble German hops to give it a subtle hint of herbal spiciness.",
+      abv: "5%",
+      size: "44 CL",
+      stock: 10,
+      price: 32.8,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45_days_rice_lager.jpg?v=1674046463&width=1100",
+      featured: true,
+      active: true,
+      slug: "",
+      categoryId: "4",
+    },
+    {
+      name: "45 DAYS IPL",
+      description:
+        "Hops and lagers were meant to be. And it’s styles like this that prove you can never get too much of a good thing. A crisp lager with all its delicate complexity, then dry hopped with Idaho Gem, Mosaic, and Strata.",
+      abv: "5.5%",
+      size: "44 CL",
+      stock: 10,
+      price: 28,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45Days-India-Pale-Lager.jpg?v=1663660610&width=1100",
+      featured: false,
       active: true,
       slug: "",
       categoryId: "4",
