@@ -1,12 +1,17 @@
 const { Product, Category } = require("../models");
 
-async function showHome(req, res) {
-  const articles = await Product.findAll();
-  res.render("home", { articles });
+async function products(req, res) {
+  const products = await Product.findAll();
+  res.json(products);
 }
 
-async function showContact(req, res) {
-  res.render("contact");
+async function styleProducts(req, res) {
+  const params = req.params.style;
+  const category = await Category.findOne({
+    where: { name: params },
+    include: { model: Product },
+  });
+  res.json(category.products);
 }
 
 async function showAboutUs(req, res) {
@@ -32,8 +37,8 @@ async function categories(req, res) {
 // ...
 
 module.exports = {
-  showHome,
-  showContact,
+  products,
+  styleProducts,
   showAboutUs,
   featuredProducts,
   categories,
