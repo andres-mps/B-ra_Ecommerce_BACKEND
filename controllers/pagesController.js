@@ -23,7 +23,6 @@ async function featuredProducts(req, res) {
 
 async function categories(req, res) {
   const categories = await Category.findAll();
-  console.log(categories);
   res.json(categories);
 }
 
