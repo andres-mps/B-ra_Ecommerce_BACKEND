@@ -21,6 +21,12 @@ async function featuredProducts(req, res) {
   res.json(products);
 }
 
+async function categories(req, res) {
+  const categories = await Category.findAll();
+  console.log(categories);
+  res.json(categories);
+}
+
 // Otros handlers...
 // ...
 
@@ -29,4 +35,5 @@ module.exports = {
   showContact,
   showAboutUs,
   featuredProducts,
+  categories,
 };
