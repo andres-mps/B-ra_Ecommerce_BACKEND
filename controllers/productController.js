@@ -14,6 +14,14 @@ async function show(req, res) {
   res.json(product);
 }
 
+async function indexFeatured(req, res) {
+  const products = await Product.findAll({
+    where: { featured: 1 },
+    include: { model: Category, attributes: ["id", "name"] },
+  });
+  res.json(products);
+}
+
 // Show the form for creating a new resource
 async function create(req, res) {}
 
@@ -35,6 +43,7 @@ async function destroy(req, res) {}
 module.exports = {
   index,
   show,
+  indexFeatured,
   create,
   store,
   edit,

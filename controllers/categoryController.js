@@ -1,14 +1,22 @@
-const { Product, Category } = require("../models");
-
-async function showAboutUs(req, res) {
-  res.render("aboutUs");
-}
+const { Category, Product } = require("../models");
 
 // Display a listing of the resource.
-async function index(req, res) {}
+async function index(req, res) {
+  const categories = await Category.findAll({
+    include: [{ model: Product, attributes: ["id", "name"] }],
+  });
+  res.json(categories);
+}
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  const params = req.params.style;
+  const category = await Category.findOne({
+    where: { name: params },
+    include: { model: Product },
+  });
+  res.json(category.products);
+}
 
 // Show the form for creating a new resource
 async function create(req, res) {}
@@ -25,8 +33,10 @@ async function update(req, res) {}
 // Remove the specified resource from storage.
 async function destroy(req, res) {}
 
+// Otros handlers...
+// ...
+
 module.exports = {
-  showAboutUs,
   index,
   show,
   create,

@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const productController = require("../controllers/productController");
+const categoryController = require("../controllers/categoryController");
 
-router.get("/products", productController.index);
-router.get("/beers/:product", productController.show); //Hay que hacer el cambio de beers a products
-router.get("/products/featured", productController.indexFeatured);
+router.get("/products/categories", categoryController.index);
+
+//Dejarla como ultima!!! sino parametriza antes de entrar a las otras opciones de ruta luego de products
+router.get("/products/:style", categoryController.show);
 
 // Sin uso momentaneamente, no borrar
 // router.get("/crear", productController.create);
