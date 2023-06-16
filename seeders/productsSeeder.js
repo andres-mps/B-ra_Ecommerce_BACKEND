@@ -1,4 +1,5 @@
 const { Product } = require("../models");
+const slugify = require("slugify");
 
 module.exports = async () => {
   const products = [
@@ -168,6 +169,10 @@ module.exports = async () => {
       categoryId: "4",
     },
   ];
+
+  products.forEach((product) => {
+    product.slug = slugify(product.name, { lower: true, replacement: "-" });
+  });
 
   await Product.bulkCreate(products);
   console.log("[Database] Se corrió el seeder de Products.");

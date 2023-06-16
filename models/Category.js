@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const slugify = require("slugify");
 
 class Category extends Model {
   static initModel(sequelize) {
@@ -17,12 +18,19 @@ class Category extends Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
+        slug: {
+          type: DataTypes.STRING,
+        },
       },
       {
         sequelize,
         modelName: "category",
       },
     );
+
+    Category.addHook("beforeValidate", "generateSlug", (category) => {
+      category.slug = slugify(category.name, { lower: true, replacement: "-" });
+    });
     return Category;
   }
 }
