@@ -3,8 +3,8 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 
 router.get("/products", productController.index);
-router.get("/beers/:product", productController.show); //Hay que hacer el cambio de beers a products
 router.get("/products/featured", productController.indexFeatured);
+router.get("/products/:product", productController.show); //Hay que hacer el cambio de beers a products
 
 // Sin uso momentaneamente, no borrar
 // router.get("/crear", productController.create);

@@ -10,12 +10,17 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  const params = req.params.style;
-  const category = await Category.findOne({
-    where: { name: params },
-    include: { model: Product },
-  });
-  res.json(category.products);
+  const params = req.params.category;
+  try {
+    const category = await Category.findOne({
+      where: { slug: params },
+      include: { model: Product },
+    });
+    res.json(category.products);
+  } catch {
+    //const products = await Product.findAll();
+    res.json({ type: "err", content: "No existen productos para la categoria seleccionada" });
+  }
 }
 
 // Show the form for creating a new resource
