@@ -8,4 +8,7 @@ module.exports = (app) => {
   app.use("/panel", privateRoutes);
   app.use("/", productRoutes);
   app.use("/", categoryRoutes);
+
+  // app.use("/products", productRoutes);
+  // app.use("/categories", categoryRoutes);
 };
