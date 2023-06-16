@@ -1,10 +1,17 @@
-const { Product } = require("../models");
+const { Product, Category } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {}
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  const params = req.params.product;
+  const product = await Product.findOne({
+    where: { slug: params },
+    include: { model: Category, attributes: ["id", "name"] },
+  });
+  res.json(product);
+}
 
 // Show the form for creating a new resource
 async function create(req, res) {}

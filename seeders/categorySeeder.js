@@ -1,4 +1,5 @@
 const { Category } = require("../models");
+const slugify = require("slugify");
 
 module.exports = async () => {
   const categories = [
@@ -23,6 +24,10 @@ module.exports = async () => {
         "https://cdn.shopify.com/s/files/1/0266/3704/1767/collections/pilsner.jpg?v=1675251988&width=750",
     },
   ];
+
+  categories.forEach((category) => {
+    category.slug = slugify(category.name, { lower: true, replacement: "-" });
+  });
 
   await Category.bulkCreate(categories);
   console.log("[Database] Se corrió el seeder de Categories.");

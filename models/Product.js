@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const slugify = require("slugify");
 
 class Product extends Model {
   static initModel(sequelize) {
@@ -67,6 +68,10 @@ class Product extends Model {
         modelName: "product",
       },
     );
+
+    Product.addHook("beforeValidate", "generateSlug", (product) => {
+      product.slug = slugify(product.name, { lower: true, replacement: "-" });
+    });
 
     return Product;
   }
