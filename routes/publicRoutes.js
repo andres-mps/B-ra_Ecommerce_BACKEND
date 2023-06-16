@@ -1,13 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {
-  featuredProducts,
-  categories,
-  products,
-  styleProducts,
-} = require("../controllers/pagesController");
+const { featuredProducts, categories, styleProducts } = require("../controllers/pagesController");
 
-router.get("/products", products);
 router.get("/products/featured", featuredProducts);
 router.get("/products/categories", categories);
 

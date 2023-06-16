@@ -1,10 +1,5 @@
 const { Product, Category } = require("../models");
 
-async function products(req, res) {
-  const products = await Product.findAll();
-  res.json(products);
-}
-
 async function styleProducts(req, res) {
   const params = req.params.style;
   const category = await Category.findOne({
@@ -37,7 +32,6 @@ async function categories(req, res) {
 // ...
 
 module.exports = {
-  products,
   styleProducts,
   showAboutUs,
   featuredProducts,
