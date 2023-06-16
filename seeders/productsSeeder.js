@@ -168,6 +168,156 @@ module.exports = async () => {
       slug: "",
       categoryId: "4",
     },
+    {
+      name: "Berry Barrage",
+      description:
+        "This red berry sour is bound to be a new To Øl classic! Full of cherry, lingonberry, and red currant, it has the right balance of sweet and tart and the right balance of thirst-quenching and mouth-puckering.",
+      abv: "5.2%",
+      size: "44 CL",
+      stock: 10,
+      price: 39,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/berry_barrage.jpg?v=1679909048&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "2",
+    },
+    {
+      name: "Black Pastry Sour",
+      description:
+        "This is a kettle sour beer that is mostly light in flavour but dark in colour through the addition of a small amount of dark malt. It is flavoured with black currants, to add to the black colour and pastry-fied with lactose and vanilla.",
+      abv: "6.0%",
+      size: "44 CL",
+      stock: 10,
+      price: 49,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/black_pastry_sour.png?v=1673010152&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "2",
+    },
+    {
+      name: "Division of Light",
+      description:
+        "Using the same wort base as our recently released table beer, a portion was added on top of the spent Stevnsbær cherries used to make Ordinance. Where the fruit was at center stage in the latter, the opposite is true of this beer. What we get in return from this second maceration of the fruit is a light, floral and refreshing beer. Canned with local raw honey for a natural carbonation.",
+      abv: "6.0%",
+      size: "44 CL",
+      stock: 10,
+      price: 32,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/Division-of-Light.jpg?v=1663323981&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "2",
+    },
+    {
+      name: "Santa's Secret: Mochaccino Messiah Triple Shot",
+      description:
+        "Ever wondered how Father Christmas delivers presents down all of those chimneys in one night? Well, he may have a little help up his sleeve. Santa's Secret is our classic Mochaccino Messiah - and some. Injected full of coffee, this 8% beauty is both sweet and malty with hints of chocolate, a boost of caffeine and warm Christmas notes of Cinnamon and Cardamom to finish off. He is Scandinavian, after all.",
+      abv: "8.3%",
+      size: "44 CL",
+      stock: 10,
+      price: 52,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/santas_secret_mochaccino_messiah.jpg?v=1666687742&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "12th Anniversary",
+      description:
+        "This luscious imperial stout contains the number 12 in at least 12 places. (12 malts, abv 12,12, 12kg roibos tea, etc..) it has delicious flavours to give it interesting floral notes - roibos tea, tonka beans, vanilla beans, plus cacao nibs and coffee.",
+      abv: "12.12%",
+      size: "44 CL",
+      stock: 10,
+      price: 52,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/12th_anniversary.jpg?v=1666774379&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "Mexican Hot Chocolat BA",
+      description:
+        "Cinnamon, chocolate, and chili peppers swirled together in a dark, rich stout for the most comforting, delicious, and downright decadent version of a Mexican hot chocolate you ever laid your hands on. And now in a barrel aged version? Dios mio! Imperial Milk Stout aged 12 months in Bourbon barrels. With additions of Walnuts, Almonds, Hazelnuts, Pecans, Cinnamon, Cacao nibs, Chilis, and Lactose.",
+      abv: "11.0%",
+      size: "37.5 CL",
+      stock: 10,
+      price: 96,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/MexicanHotChocolateBAImperial-web.jpg?v=1656492722&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "Goliat BA",
+      description:
+        "A towering gargantuan, the great warrior of Gath! The mighty champion of the Philistines and firmly embedded in ancient folklore and religion. Coming from the World of Old. NOW, after laying 10 months in Bourbon barrels, he has risen again once more...",
+      abv: "13.7%",
+      size: "37.5 CL",
+      stock: 10,
+      price: 96,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/goliatba.jpg?v=1605786525&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "3",
+    },
+    {
+      name: "45 Days Organic Pilsner",
+      description:
+        "The slower the fermentation, the better a pilsner tastes. We took no risks and decided to ferment and mature our pilsner no less than 45 days. It would be a sin to rush it after all. Enjoy all the crisp complexity that belongs in the golden lager we all love, and enjoy it more knowing it was made only with the highest respect and admiration for the style.",
+      abv: "4.7%",
+      size: "44 CL",
+      stock: 10,
+      price: 34,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45day-organic-pilsner.jpg?v=1663660569&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "4",
+    },
+    {
+      name: "Collaboration Curse",
+      description:
+        "A crispy German lager dry hopped with some marvelous New Zealand hops. The result is a smashingly bright and golden, thirst-quenching brew perfect to enjoy on days ending in Y",
+      abv: "4.3%",
+      size: "44 CL",
+      stock: 10,
+      price: 34,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/collaboration_curse.jpg?v=1661174168&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "4",
+    },
+    {
+      name: "45 Days Vienna Lager",
+      description:
+        "Brewed and slowly matured in our beautifully restored lagering tanks at To Øl City. There is no room for flaws in delicate lagers like these. Only noble hops, golden malts, and a little bit of patience.",
+      abv: "4.7%",
+      size: "44 CL",
+      stock: 10,
+      price: 37,
+      image:
+        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45_days_vienna.jpg?v=1661172698&width=1100",
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "4",
+    },
   ];
 
   products.forEach((product) => {
