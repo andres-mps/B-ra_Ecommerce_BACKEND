@@ -42,12 +42,20 @@ class User extends Model {
             const hashedPassword = await bcrypt.hash(user.password, 5);
             user.password = hashedPassword;
           },
+          beforeUpdate: async (user, options) => {
+            if (user.changed("password")) {
+              console.log("cambió la password");
+              const hashedPassword = await bcrypt.hash(user.password, 5);
+              user.password = hashedPassword;
+            }
+          },
         },
       },
       (User.prototype.comparePassword = async function (passwordToValidate) {
         return await bcrypt.compare(passwordToValidate, this.password);
       }),
     );
+
     User.prototype.toJSON = function () {
       const user = this.get();
       delete user.password;
