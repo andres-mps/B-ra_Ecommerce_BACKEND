@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { Product, Category } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {}
@@ -21,9 +21,6 @@ async function update(req, res) {}
 // Remove the specified resource from storage.
 async function destroy(req, res) {}
 
-// Token controller
-async function token(req, res) {}
-
 module.exports = {
   index,
   show,
@@ -32,5 +29,4 @@ module.exports = {
   edit,
   update,
   destroy,
-  token,
 };

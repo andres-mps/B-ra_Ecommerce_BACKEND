@@ -5,11 +5,9 @@ const userController = require("../controllers/userController");
 // Rutas relacionadas a los usuarios:
 // ...
 
-router.get("/", userController.index);
-router.get("/crear", userController.create);
+router.get("/token", userController.token);
+
 router.post("/", userController.store);
-router.get("/:id", userController.show);
-router.get("/:id/editar", userController.edit);
 router.patch("/:id", userController.update);
 router.delete("/:id", userController.destroy);
 

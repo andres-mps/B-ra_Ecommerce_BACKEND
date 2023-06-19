@@ -1,9 +1,5 @@
 const { Product, Category } = require("../models");
 
-async function showAboutUs(req, res) {
-  res.render("aboutUs");
-}
-
 // Display a listing of the resource.
 async function index(req, res) {}
 
@@ -25,8 +21,10 @@ async function update(req, res) {}
 // Remove the specified resource from storage.
 async function destroy(req, res) {}
 
+// Token controller
+async function token(req, res) {}
+
 module.exports = {
-  showAboutUs,
   index,
   show,
   create,
@@ -34,4 +32,5 @@ module.exports = {
   edit,
   update,
   destroy,
+  token,
 };
