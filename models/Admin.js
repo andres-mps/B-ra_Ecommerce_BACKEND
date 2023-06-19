@@ -31,6 +31,17 @@ class Admin extends Model {
       {
         sequelize,
         modelName: "admin",
+        paranoid: true,
+        hooks: {
+          beforeCreate: async (admin, options) => {
+            const hashedPassword = await bcrypt.hash(admin.password, 5);
+            admin.password = hashedPassword;
+          },
+          beforeUpdate: async (admin, options) => {
+            const hashedPassword = await bcrypt.hash(admin.password, 5);
+            admin.password = hashedPassword;
+          },
+        },
       },
       (Admin.prototype.comparePassword = async function (passwordToValidate) {
         return await bcrypt.compare(passwordToValidate, this.password);
