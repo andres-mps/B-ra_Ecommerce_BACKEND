@@ -1,7 +1,9 @@
 const { Product, Category } = require("../models");
 
 async function index(req, res) {
-  const products = await Product.findAll();
+  const products = await Product.findAll({
+    include: [{ model: Category, attributes: ["id", "name"] }],
+  });
   res.json(products);
 }
 
