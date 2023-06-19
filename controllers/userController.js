@@ -11,7 +11,22 @@ async function show(req, res) {}
 async function create(req, res) {}
 
 // Store a newly created resource in storage.
-async function store(req, res) {}
+async function store(req, res) {
+  const { firstname, lastname, email, password, address, phone } = req.body;
+  try {
+    const user = await User.create({
+      firstname,
+      lastname,
+      email,
+      password,
+      address,
+      phone,
+    });
+    return res.json(user);
+  } catch (err) {
+    return res.json(err.errors[0].message);
+  }
+}
 
 // Show the form for editing the specified resource.
 async function edit(req, res) {}
