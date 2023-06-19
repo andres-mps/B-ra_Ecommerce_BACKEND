@@ -1,4 +1,5 @@
-const { Product, Category } = require("../models");
+const { Admin } = require("../models");
+const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
 async function index(req, res) {}
@@ -22,7 +23,21 @@ async function update(req, res) {}
 async function destroy(req, res) {}
 
 // Token controller
-async function token(req, res) {}
+async function token(req, res) {
+  const { email, password } = req.body;
+  const admin = await Admin.findOne({ where: { email: email } });
+  if (!admin) {
+    return res.json("Credenciales incorrectas");
+  }
+  const match = await admin.comparePassword(password);
+  if (!match) {
+    return res.json("Credenciales incorrectas");
+  }
+
+  const token = jwt.sign({ id: admin.id, role: "admin" }, process.env.SESSION_SECRET);
+
+  return res.json({ token, adminData: admin });
+}
 
 module.exports = {
   index,

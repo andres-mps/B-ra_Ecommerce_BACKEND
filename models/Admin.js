@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
 class Admin extends Model {
   static initModel(sequelize) {
@@ -31,7 +32,15 @@ class Admin extends Model {
         sequelize,
         modelName: "admin",
       },
+      (Admin.prototype.comparePassword = async function (passwordToValidate) {
+        return await bcrypt.compare(passwordToValidate, this.password);
+      }),
     );
+    Admin.prototype.toJSON = function () {
+      const admin = this.get();
+      delete admin.password;
+      return admin;
+    };
     return Admin;
   }
 }

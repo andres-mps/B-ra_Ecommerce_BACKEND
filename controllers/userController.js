@@ -27,11 +27,11 @@ async function token(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email: email } });
   if (!user) {
-    res.json("Credenciales incorrectas");
+    return res.json("Credenciales incorrectas");
   }
   const match = await user.comparePassword(password);
   if (!match) {
-    res.json("Credenciales incorrectas");
+    return res.json("Credenciales incorrectas");
   }
 
   const token = jwt.sign({ id: user.id, role: "user" }, process.env.SESSION_SECRET);
