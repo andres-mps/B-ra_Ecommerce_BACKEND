@@ -44,7 +44,15 @@ class User extends Model {
           },
         },
       },
+      (User.prototype.comparePassword = async function (passwordToValidate) {
+        return await bcrypt.compare(passwordToValidate, this.password);
+      }),
     );
+    User.prototype.toJSON = function () {
+      const user = this.get();
+      delete user.password;
+      return user;
+    };
     return User;
   }
 }

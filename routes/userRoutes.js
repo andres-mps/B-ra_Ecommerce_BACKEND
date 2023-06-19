@@ -5,7 +5,7 @@ const userController = require("../controllers/userController");
 // Rutas relacionadas a los usuarios:
 // ...
 
-router.get("/token", userController.token);
+router.post("/token", userController.token);
 
 router.post("/", userController.store);
 router.patch("/:id", userController.update);
