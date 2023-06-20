@@ -84,14 +84,15 @@ class Product extends Model {
       },
     );
 
+    Product.addHook("beforeValidate", "generateSlug", (product) => {
+      product.slug = slugify(product.name, { lower: true, replacement: "-" });
+    });
+
     // Product.addHook("beforeValidate", "generateSlug", (product) => {
-    //   product.slug = slugify(product.name, { lower: true, replacement: "-" });
+    //   const slugName = slugify(`${product.name}${product.name}`, { lower: true, replacement: "-" });
+    //   product.slug = `${slugName}-${product.id}`;
     // });
 
-    Product.addHook("beforeValidate", "generateSlug", (product) => {
-      const slugName = slugify(product.name, { lower: true, replacement: "-" });
-      product.slug = `${slugName}-${product.id}`;
-    });
     return Product;
   }
 }

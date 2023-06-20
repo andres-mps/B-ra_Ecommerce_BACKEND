@@ -2,7 +2,9 @@ const { Order, User } = require("../models");
 
 // Muestra todas las ordenes
 async function index(req, res) {
-  const orders = await Order.findAll();
+  const orders = await Order.findAll({
+    include: [{ model: User, attributes: ["firstname", "lastname", "email"] }],
+  });
   res.json(orders);
 }
 

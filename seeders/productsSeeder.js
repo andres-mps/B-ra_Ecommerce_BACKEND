@@ -324,6 +324,11 @@ module.exports = async () => {
     product.slug = slugify(product.name, { lower: true, replacement: "-" });
   });
 
+  // Product.addHook("beforeValidate", "generateSlug", (product) => {
+  //   const slugName = slugify(product.name, { lower: true, replacement: "-" });
+  //   product.slug = `${slugName}-${product.id}`;
+  // });
+
   await Product.bulkCreate(products);
   console.log("[Database] Se corrió el seeder de Products.");
 };

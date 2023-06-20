@@ -5,9 +5,9 @@ const verifyToken = require("../middlewares/verifyToken");
 const isAdmin = require("../middlewares/isAdmin");
 const atLeastOwner = require("../middlewares/atLeastOwner");
 
-router.use(verifyToken);
+// router.use(verifyToken);
 
-router.get("/", isAdmin, orderController.index);
+router.get("/", orderController.index);
 router.get("/:userId", atLeastOwner, orderController.show);
 
 router.post("/:userId", orderController.store);
