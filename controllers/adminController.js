@@ -31,12 +31,12 @@ async function store(req, res) {
         password,
       });
       await admin.save();
+      return res.json("Se ha creado un nuevo admin");
     } catch (err) {
       console.log({ "Error al registrar un admin": err });
       res.json(err);
     }
   });
-  return res.json("Se ha creado un nuevo admin");
 }
 
 // Show the form for editing the specified resource.
@@ -47,26 +47,30 @@ async function update(req, res) {
   const { firstname, lastname, email, password } = req.body;
   try {
     const admin = await Admin.findByPk(req.params.id);
-
     if (!admin) {
-      return res.json("No se ha encontrado el admin a modificar");
+      return res.json("Admin no encontrado");
     }
 
-    const updatedFields = {
-      firstname: firstname ? firstname : admin.firstname,
-      lastname: lastname ? lastname : admin.lastname,
-      email: email ? email : admin.email,
-      password: password ? password : admin.password,
-    };
+    if (firstname && firstname !== admin.firstname) {
+      admin.firstname = firstname;
+    }
+    if (lastname && lastname !== admin.lastname) {
+      admin.lastname = lastname;
+    }
+    if (email && email !== admin.email) {
+      admin.email = email;
+    }
 
-    await Admin.update(updatedFields, {
-      where: { id: req.params.id },
-    });
+    const match = await admin.comparePassword(password);
+    if (password && !match) {
+      admin.password = password;
+    }
 
-    return res.json("Se ha modificado un admin");
+    await admin.save();
+    return res.json(admin);
   } catch (err) {
-    console.log({ "Error al modificar un admin": err });
-    return res.json(err);
+    console.log({ "Error al actualizar el admin": err });
+    res.json(err);
   }
 }
 

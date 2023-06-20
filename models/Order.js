@@ -12,10 +12,16 @@ class Order extends Model {
         products: {
           type: DataTypes.JSON,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         subTotalPrice: {
           type: DataTypes.DECIMAL(10, 2),
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         taxes: {
           type: DataTypes.DECIMAL(10, 2),
@@ -23,6 +29,9 @@ class Order extends Model {
         totalAmount: {
           type: DataTypes.DECIMAL(10, 2),
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         status: {
           type: DataTypes.STRING,
@@ -30,11 +39,15 @@ class Order extends Model {
         address: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
       },
       {
         sequelize,
         modelName: "order",
+        paranoid: true,
       },
     );
     return Order;

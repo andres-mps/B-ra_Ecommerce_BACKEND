@@ -48,12 +48,15 @@ async function update(req, res) {
   const orderId = req.params.id;
   const order = await Order.findByPk(orderId);
   const { products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
-  order.products = products;
-  order.subTotalPrice = subTotalPrice;
-  order.taxes = taxes;
-  order.totalAmount = totalAmount;
-  order.status = status;
-  order.address = address;
+
+  products && products !== order.products && (order.products = products);
+  subTotalPrice && subTotalPrice !== order.subTotalPrice && (order.subTotalPrice = subTotalPrice);
+  taxes !== order.taxes && (order.taxes = taxes);
+  taxes === "" && (order.taxes = 0);
+  totalAmount && totalAmount !== order.totalAmount && (order.totalAmount = totalAmount);
+  status !== order.status && (order.status = status);
+  address && address !== order.address && (order.address = address);
+
   await order.save();
   res.json(order);
 }

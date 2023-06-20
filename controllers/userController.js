@@ -36,36 +36,25 @@ async function update(req, res) {
   const { firstname, lastname, email, password, address, phone } = req.body;
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
+
     if (!user) {
       return res.json("Usuario no encontrado");
     }
 
-    if (firstname && firstname !== user.firstname) {
-      user.firstname = firstname;
-    }
-    if (lastname && lastname !== user.lastname) {
-      user.lastname = lastname;
-    }
-    if (email && email !== user.email) {
-      user.email = email;
-    }
+    firstname && firstname !== user.firstname && (user.firstname = firstname);
+    lastname && lastname !== user.lastname && (user.lastname = lastname);
+    email && email !== user.email && (user.email = email);
 
     const match = await user.comparePassword(password);
-    if (password && !match) {
-      user.password = password;
-    }
+    password && !match && (user.password = password);
 
-    if (address && address !== user.address) {
-      user.address = address;
-    }
-    if (phone && phone !== user.phone) {
-      user.phone = phone;
-    }
+    address !== user.address && (user.address = address);
+    phone !== user.phone && (user.phone = phone);
 
     await user.save();
     return res.json(user);
   } catch (err) {
-    return res.json("Error al actualizar el usuario");
+    return res.json(err);
   }
 }
 

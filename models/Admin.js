@@ -13,19 +13,31 @@ class Admin extends Model {
         firstname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         lastname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         email: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
         password: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
       },
       {
