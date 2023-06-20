@@ -7,6 +7,14 @@ faker.locale = "es";
 module.exports = async () => {
   const users = [];
   const passwordHashed = await bcrypt.hash("1234", 5);
+  users.push({
+    firstname: "Unknown",
+    lastname: "Unknown",
+    email: "Unknown@Unknown",
+    password: passwordHashed,
+    address: "Unknown",
+    phone: "099000000",
+  });
   for (let i = 1; i < 30; i++) {
     users.push({
       firstname: faker.name.firstName(),

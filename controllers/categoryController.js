@@ -1,6 +1,5 @@
 const { Category, Product } = require("../models");
 
-// Display a listing of the resource.
 async function index(req, res) {
   const categories = await Category.findAll({
     include: [{ model: Product, attributes: ["id", "name"] }],
@@ -8,7 +7,6 @@ async function index(req, res) {
   res.json(categories);
 }
 
-// Display the specified resource.
 async function show(req, res) {
   const params = req.params.category;
   try {
@@ -23,23 +21,46 @@ async function show(req, res) {
   }
 }
 
-// Show the form for creating a new resource
-async function create(req, res) {}
+async function create(req, res) {
+  const category = await Category.create({
+    name: req.body.name,
+    image: req.body.image,
+  });
+  return res.json("creada");
+}
 
-// Store a newly created resource in storage.
 async function store(req, res) {}
 
-// Show the form for editing the specified resource.
 async function edit(req, res) {}
 
-// Update the specified resource in storage.
-async function update(req, res) {}
+async function update(req, res) {
+  const id = req.params.id;
+  const { name, image } = req.body;
 
-// Remove the specified resource from storage.
-async function destroy(req, res) {}
+  try {
+    await Category.update({ name, image }, { where: { id } });
 
-// Otros handlers...
-// ...
+    res.json({ message: "Categoría actualizada exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar la categoría" });
+  }
+}
+
+async function destroy(req, res) {
+  const id = req.params.id;
+  try {
+    const category = await Category.findByPk(id);
+    if (!category) {
+      return res.status(404).json({ error: "Categoría no encontrada" });
+    }
+    await category.destroy();
+    res.json({ message: "Categoría eliminada exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar la categoría" });
+  }
+}
 
 module.exports = {
   index,

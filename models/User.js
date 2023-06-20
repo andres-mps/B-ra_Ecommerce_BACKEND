@@ -13,19 +13,31 @@ class User extends Model {
         firstname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         lastname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         email: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
         password: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         address: {
           type: DataTypes.STRING,
@@ -37,10 +49,22 @@ class User extends Model {
       {
         sequelize,
         modelName: "user",
+        paranoid: true,
         hooks: {
           beforeCreate: async (user, options) => {
+            if (user.firstname.toLowerCase() === "unknown") {
+              options.abort = true;
+              throw new Error("No se puede crear un usuario con el nombre 'Unknown'.");
+            }
             const hashedPassword = await bcrypt.hash(user.password, 5);
             user.password = hashedPassword;
+          },
+          beforeUpdate: async (user, options) => {
+            if (user.changed("password")) {
+              console.log("cambió la password");
+              const hashedPassword = await bcrypt.hash(user.password, 5);
+              user.password = hashedPassword;
+            }
           },
         },
       },
@@ -48,6 +72,7 @@ class User extends Model {
         return await bcrypt.compare(passwordToValidate, this.password);
       }),
     );
+
     User.prototype.toJSON = function () {
       const user = this.get();
       delete user.password;
