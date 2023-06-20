@@ -46,19 +46,27 @@ async function edit(req, res) {}
 async function update(req, res) {
   const { firstname, lastname, email, password } = req.body;
   try {
-    const admin = await Admin.update(
-      {
-        firstname,
-        lastname,
-        email,
-        password,
-      },
-      { where: { id: req.params.id }, individualHooks: true },
-    );
+    const admin = await Admin.findByPk(req.params.id);
+
+    if (!admin) {
+      return res.json("No se ha encontrado el admin a modificar");
+    }
+
+    const updatedFields = {
+      firstname: firstname ? firstname : admin.firstname,
+      lastname: lastname ? lastname : admin.lastname,
+      email: email ? email : admin.email,
+      password: password ? password : admin.password,
+    };
+
+    await Admin.update(updatedFields, {
+      where: { id: req.params.id },
+    });
+
     return res.json("Se ha modificado un admin");
   } catch (err) {
     console.log({ "Error al modificar un admin": err });
-    res.json(err);
+    return res.json(err);
   }
 }
 
