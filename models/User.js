@@ -39,6 +39,10 @@ class User extends Model {
         modelName: "user",
         hooks: {
           beforeCreate: async (user, options) => {
+            if (user.firstname.toLowerCase() === "unknown") {
+              options.abort = true;
+              throw new Error("No se puede crear un usuario con el nombre 'Unknown'.");
+            }
             const hashedPassword = await bcrypt.hash(user.password, 5);
             user.password = hashedPassword;
           },

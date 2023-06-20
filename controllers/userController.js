@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Order } = require("../models");
 const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
@@ -23,8 +23,8 @@ async function store(req, res) {
       phone,
     });
     return res.json(user);
-  } catch (err) {
-    return res.json(err.errors[0].message);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 }
 
@@ -70,7 +70,49 @@ async function update(req, res) {
 }
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
+async function destroy(req, res) {
+  const user = await User.findOne({
+    where: { id: req.params.id },
+    include: {
+      model: Order,
+      as: "orders",
+    },
+  });
+
+  if (user.firstname === "Unknown") {
+    return res.json("No puedes eliminar el usuario unknown");
+  }
+
+  const userOrders = user.orders;
+
+  const unknownUser = await User.findOne({ where: { firstname: "Unknown" } });
+  if (!unknownUser) {
+    await User.create({
+      firstname: "Unknown",
+      lastname: "Unknown",
+      email: "Unknown@Unknown",
+      password: "1234",
+      address: "Unknown",
+      phone: "Unknown",
+    });
+  }
+
+  const unknown = await User.findOne({ where: { firstname: "Unknown" } });
+
+  try {
+    await Promise.all(
+      userOrders.map((order) => {
+        return order.update({ userId: unknown.id });
+      }),
+    );
+
+    await User.destroy({ where: { id: req.params.id } });
+
+    return res.json("Usuario actualizado  y eliminado correctamente.");
+  } catch (err) {
+    return res.json(err);
+  }
+}
 
 // Token controller
 async function token(req, res) {
