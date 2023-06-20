@@ -49,7 +49,6 @@ class User extends Model {
       {
         sequelize,
         modelName: "user",
-        paranoid: true,
         hooks: {
           beforeCreate: async (user, options) => {
             if (user.firstname.toLowerCase() === "unknown") {

@@ -10,6 +10,6 @@ router.post("/", userController.store);
 //router.use(verifyToken);
 
 router.patch("/:id", /*isOwner,*/ userController.update);
-router.delete("/:id", userController.destroy);
+router.delete("/:id", /*isOwner,*/ userController.destroy);
 
 module.exports = router;
