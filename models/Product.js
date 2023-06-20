@@ -14,18 +14,30 @@ class Product extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
         description: {
           type: DataTypes.TEXT,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         abv: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         size: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         stock: {
           type: DataTypes.INTEGER,
@@ -35,6 +47,7 @@ class Product extends Model {
                 throw new Error("Stock cannot be negative.");
               }
             },
+            notEmpty: true,
           },
         },
         price: {
@@ -46,6 +59,7 @@ class Product extends Model {
                 throw new Error("Stock cannot be negative.");
               }
             },
+            notEmpty: true,
           },
         },
         image: {
@@ -66,6 +80,7 @@ class Product extends Model {
       {
         sequelize,
         modelName: "product",
+        paranoid: true,
       },
     );
 

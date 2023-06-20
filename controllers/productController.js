@@ -30,42 +30,6 @@ async function create(req, res) {}
 
 // Store a newly created resource in storage.
 async function store(req, res) {
-  const form = formidable({
-    multiples: true,
-    uploadDir: __dirname + "/../public/img",
-    keepExtensions: true,
-  });
-
-  form.parse(req, async (err, fields, files) => {
-    console.log(files);
-    const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
-      fields;
-
-    const newProduct = new Product({
-      name: name,
-      description: description,
-      abv: abv,
-      size: size,
-      stock: stock,
-      price: price,
-      image: "img/products/" + files.image.newFilename,
-      featured: featured,
-      active: active,
-      slug: slug,
-      categoryId: categoryId,
-    });
-
-    await newProduct.save();
-
-    res.json(newProduct);
-  });
-}
-
-// Show the form for editing the specified resource.
-async function edit(req, res) {}
-
-// Update the specified resource in storage.
-async function update(req, res) {
   try {
     const form = formidable({
       multiples: true,
@@ -74,35 +38,85 @@ async function update(req, res) {
     });
 
     form.parse(req, async (err, fields, files) => {
-      const { id, name } = fields;
+      const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
+        fields;
 
-      const product = await Product.findByPk(id);
+      const newProduct = new Product({
+        name,
+        description,
+        abv,
+        size,
+        stock,
+        price,
+        image: files.image.newFilename,
+        featured,
+        active,
+        slug,
+        categoryId,
+      });
+      await newProduct.save();
+      res.json(newProduct);
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
+// Update the specified resource in storage.
+async function update(req, res) {
+  const productId = req.params.product;
+  console.log(req.params.id);
+  try {
+    const form = formidable({
+      multiples: true,
+      uploadDir: __dirname + "/../public/img",
+      keepExtensions: true,
+    });
+
+    form.parse(req, async (err, fields, files) => {
+      const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
+        fields;
+
+      const product = await Product.findByPk(productId);
       if (!product) {
         return res.json({ error: "Product not found" });
       }
 
-      if (name && name !== product.name) {
-        product.name = name;
-      }
+      name && name !== product.name && (product.name = name);
+      description && description !== product.description && (product.description = description);
+      abv && abv !== product.abv && (product.abv = abv);
+      size && size !== product.size && (product.size = size);
+      stock && stock !== product.stock && (product.stock = stock);
+      price && price !== product.price && (product.price = price);
+      featured && featured !== product.featured && (product.featured = featured);
+      active && active !== product.active && (product.active = active);
+      categoryId && categoryId !== product.categoryId && (product.categoryId = categoryId);
+      slug && slug !== product.slug && (product.slug = slug);
 
-      if (description && description !== product.name) {
-        product.name = name;
-      }
+      files.image && files.image !== product.image && (product.image = files.image.newFilename);
 
       await product.save();
       res.json(product);
     });
   } catch (error) {
-    console.error(error);
-    res.json({ error: "Error" });
+    return res.status(400).json({ message: error.message });
   }
 }
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
-
-// Otros handlers...
-// ...
+async function destroy(req, res) {
+  const productId = req.params.product;
+  try {
+    await Product.destroy({
+      where: {
+        id: productId,
+      },
+    });
+    res.json({ message: "Producto eliminado correctamente" });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
 
 module.exports = {
   index,
@@ -110,7 +124,6 @@ module.exports = {
   indexFeatured,
   create,
   store,
-  edit,
   update,
   destroy,
 };

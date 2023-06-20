@@ -7,7 +7,7 @@ router.get("/featured", productController.indexFeatured);
 router.get("/:product", productController.show);
 
 router.post("/", productController.store);
-router.patch("/:id", productController.update);
-router.delete("/:id", productController.destroy);
+router.patch("/:product", productController.update);
+router.delete("/:product", productController.destroy);
 
 module.exports = router;
