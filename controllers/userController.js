@@ -78,35 +78,27 @@ async function destroy(req, res) {
       as: "orders",
     },
   });
-
+  if (!user) {
+    return res.json("Usuario no encontrado");
+  }
   if (user.firstname === "Unknown") {
     return res.json("No puedes eliminar el usuario unknown");
   }
 
   const userOrders = user.orders;
 
-  const unknownUser = await User.findOne({ where: { firstname: "Unknown" } });
-  if (!unknownUser) {
-    await User.create({
-      firstname: "Unknown",
-      lastname: "Unknown",
-      email: "Unknown@Unknown",
-      password: "1234",
-      address: "Unknown",
-      phone: "Unknown",
-    });
-  }
-
-  const unknown = await User.findOne({ where: { firstname: "Unknown" } });
-
   try {
+    const unknown = await User.findOne({
+      where: { firstname: "Unknown" },
+    }); //Creado desde los seeders
+
     await Promise.all(
       userOrders.map((order) => {
         return order.update({ userId: unknown.id });
       }),
     );
 
-    await User.destroy({ where: { id: req.params.id } });
+    await User.destroy({ where: { id: req.params.id } }); //actualizar con paranoid
 
     return res.json("Usuario actualizado  y eliminado correctamente.");
   } catch (err) {

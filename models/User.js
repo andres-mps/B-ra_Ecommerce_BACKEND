@@ -13,19 +13,31 @@ class User extends Model {
         firstname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         lastname: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         email: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
         password: {
           type: DataTypes.STRING,
           allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
         },
         address: {
           type: DataTypes.STRING,
@@ -37,6 +49,7 @@ class User extends Model {
       {
         sequelize,
         modelName: "user",
+        paranoid: true,
         hooks: {
           beforeCreate: async (user, options) => {
             if (user.firstname.toLowerCase() === "unknown") {
