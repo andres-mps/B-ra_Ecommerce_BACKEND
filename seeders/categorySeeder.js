@@ -5,23 +5,19 @@ module.exports = async () => {
   const categories = [
     {
       name: "IPA",
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/collections/hoppy-beers.jpg?v=1675247646&width=750",
+      image: "hoppy-beers.webp",
     },
     {
       name: "Sour",
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/collections/sours2.jpg?v=1675248385&width=750",
+      image: "sours2.webp",
     },
     {
       name: "Stout",
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/collections/collection-toolnatur_f033ba0c-a0d6-43ca-b8a1-fb03ef2ebc25.jpg?v=1675251318&width=750",
+      image: "collection-toolnatur_f033ba0c-a0d6-43ca-b8a1-fb03ef2ebc25.webp",
     },
     {
       name: "Lager & Pilsner",
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/collections/pilsner.jpg?v=1675251988&width=750",
+      image: "pilsner.webp",
     },
   ];
 
