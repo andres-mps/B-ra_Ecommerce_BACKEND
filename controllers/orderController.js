@@ -46,7 +46,7 @@ async function store(req, res) {
   const userId = req.params.userId;
   const { products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
   if (!products || !totalAmount || !address) {
-    return res.json({ err: "err", message: "Faltan campos requeridos" });
+    return res.json({ err: "err", message: "required fields missing" });
   }
   for (const product of products) {
     const productToControl = await Product.findByPk(product.id);
@@ -54,7 +54,7 @@ async function store(req, res) {
     if (stockControl < 0) {
       return res.json({
         err: "err",
-        message: `El producto ${product.name} solo tiene ${productToControl.stock} unidades en Stock. Modifica tu compra y vuelve a intentarlo`,
+        message: `Only ${productToControl.stock} stock units for the product ${product.name}. modify your order and try again`,
       });
     }
     productToControl.stock = productToControl.stock - product.qty;
