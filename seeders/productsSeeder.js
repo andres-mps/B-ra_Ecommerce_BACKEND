@@ -11,8 +11,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 45,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/Action-Directe_44cl_can.jpg?v=1685094260&width=360",
+      image: "Action-Directe_44cl_can.webp",
       featured: true,
       active: true,
       slug: "",
@@ -26,8 +25,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 36,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/TroubleJuice-44cl.jpg?v=1683707133&width=823",
+      image: "TroubleJuice-44cl.webp",
       featured: true,
       active: true,
       slug: "",
@@ -41,8 +39,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 36,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/brokilde-brown.jpg?v=1683706583&width=823",
+      image: "brokilde-brown.webp",
       featured: true,
       active: true,
       slug: "",
@@ -56,8 +53,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 36,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/files/sovs.jpg?v=1683705460&width=823",
+      image: "sovs.webp",
       featured: true,
       active: true,
       slug: "",
@@ -71,8 +67,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 30,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/House-Of-Pale.jpg?v=1655280792&width=1100",
+      image: "House-Of-Pale.webp",
       featured: false,
       active: true,
       slug: "",
@@ -86,8 +81,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 45,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/SantaGosePastryEdition.jpg?v=1663572145&width=600",
+      image: "SantaGosePastryEdition.webp",
       featured: false,
       active: true,
       slug: "",
@@ -101,8 +95,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 45,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/Gelateria.jpg?v=1653042380&width=600",
+      image: "Gelateria.webp",
       featured: false,
       active: true,
       slug: "",
@@ -116,8 +109,7 @@ module.exports = async () => {
       size: "33 CL",
       stock: 10,
       price: 40,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/trouble-sleep.jpg?v=1661777425&width=1100",
+      image: "trouble-sleep.webp",
       featured: false,
       active: true,
       slug: "",
@@ -131,8 +123,7 @@ module.exports = async () => {
       size: "33 CL",
       stock: 10,
       price: 39.2,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/PeelTheBurn.jpg?v=1679910364&width=1100",
+      image: "PeelTheBurn.webp",
       featured: false,
       active: true,
       slug: "",
@@ -146,8 +137,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 32.8,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45_days_rice_lager.jpg?v=1674046463&width=1100",
+      image: "45_days_rice_lager.webp",
       featured: false,
       active: true,
       slug: "",
@@ -161,8 +151,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 28,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45Days-India-Pale-Lager.jpg?v=1663660610&width=1100",
+      image: "45Days-India-Pale-Lager.webp",
       featured: false,
       active: true,
       slug: "",
@@ -176,8 +165,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 39,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/berry_barrage.jpg?v=1679909048&width=1100",
+      image: "berry_barrage.webp",
       featured: false,
       active: true,
       slug: "",
@@ -191,8 +179,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 49,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/black_pastry_sour.png?v=1673010152&width=1100",
+      image: "black_pastry_sour.webp",
       featured: false,
       active: true,
       slug: "",
@@ -206,8 +193,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 32,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/Division-of-Light.jpg?v=1663323981&width=1100",
+      image: "Division-of-Light.webp",
       featured: false,
       active: true,
       slug: "",
@@ -221,8 +207,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 52,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/santas_secret_mochaccino_messiah.jpg?v=1666687742&width=1100",
+      image: "santas_secret_mochaccino_messiah.webp",
       featured: false,
       active: true,
       slug: "",
@@ -236,8 +221,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 52,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/12th_anniversary.jpg?v=1666774379&width=1100",
+      image: "12th_anniversary.webp",
       featured: false,
       active: true,
       slug: "",
@@ -251,8 +235,7 @@ module.exports = async () => {
       size: "37.5 CL",
       stock: 10,
       price: 96,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/MexicanHotChocolateBAImperial-web.jpg?v=1656492722&width=1100",
+      image: "MexicanHotChocolateBAImperial-web.webp",
       featured: false,
       active: true,
       slug: "",
@@ -266,8 +249,7 @@ module.exports = async () => {
       size: "37.5 CL",
       stock: 10,
       price: 96,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/goliatba.jpg?v=1605786525&width=1100",
+      image: "goliatba.webp",
       featured: false,
       active: true,
       slug: "",
@@ -281,8 +263,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 34,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45day-organic-pilsner.jpg?v=1663660569&width=1100",
+      image: "45day-organic-pilsner.webp",
       featured: false,
       active: true,
       slug: "",
@@ -296,8 +277,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 34,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/collaboration_curse.jpg?v=1661174168&width=1100",
+      image: "collaboration_curse.webp",
       featured: false,
       active: true,
       slug: "",
@@ -311,8 +291,7 @@ module.exports = async () => {
       size: "44 CL",
       stock: 10,
       price: 37,
-      image:
-        "https://cdn.shopify.com/s/files/1/0266/3704/1767/products/45_days_vienna.jpg?v=1661172698&width=1100",
+      image: "45_days_vienna.webp",
       featured: false,
       active: true,
       slug: "",

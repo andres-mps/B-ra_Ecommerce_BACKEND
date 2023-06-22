@@ -40,7 +40,7 @@ async function store(req, res) {
     form.parse(req, async (err, fields, files) => {
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
-
+      console.log(files);
       const newProduct = new Product({
         name,
         description,
