@@ -15,6 +15,7 @@ module.exports = async () => {
       const product2 = Math.floor(Math.random() * (products.length - 1));
       const product3 = Math.floor(Math.random() * (products.length - 1));
       const product4 = Math.floor(Math.random() * (products.length - 1));
+      const statusList = ["Pending", "In progress", "Delivered"];
       orders.push(
         {
           products: [
@@ -37,7 +38,7 @@ module.exports = async () => {
             Math.floor(
               products[product].price * qty * 0.09 + products[product2].price * qty2 * 0.09,
             ),
-          status: "pending",
+          status: statusList[Math.floor(Math.random() * 3)],
           address: user.address,
           userId: user.id,
         },
@@ -62,7 +63,7 @@ module.exports = async () => {
             Math.floor(
               products[product3].price * qty3 * 0.09 + products[product4].price * qty4 * 0.09,
             ),
-          status: "pending",
+          status: statusList[Math.floor(Math.random() * 3)],
           address: user.address,
           userId: user.id,
         },
