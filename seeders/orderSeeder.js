@@ -19,20 +19,12 @@ module.exports = async () => {
         {
           products: [
             {
-              "product.id": products[product].id,
-              "product.name": products[product].name,
-              "product.image": products[product].image,
-              "product.description": products[product].description,
+              ...products[product].dataValues,
               qty: qty,
-              price: products[product].price,
             },
             {
-              "product.id": products[product2].id,
-              "product.name": products[product2].name,
-              "product.image": products[product2].image,
-              "product.description": products[product2].description,
+              ...products[product2].dataValues,
               qty: qty2,
-              price: products[product2].price,
             },
           ],
           subTotalPrice: products[product].price * qty + products[product2].price * qty2,
@@ -52,20 +44,12 @@ module.exports = async () => {
         {
           products: [
             {
-              "product.id": products[product3].id,
-              "product.name": products[product3].name,
-              "product.image": products[product3].image,
-              "product.description": products[product3].description,
+              ...products[product3].dataValues,
               qty: qty3,
-              price: products[product3].price,
             },
             {
-              "product.id": products[product4].id,
-              "product.name": products[product4].name,
-              "product.image": products[product4].image,
-              "product.description": products[product4].description,
+              ...products[product4].dataValues,
               qty: qty4,
-              price: products[product4].price,
             },
           ],
           subTotalPrice: products[product3].price * qty3 + products[product4].price * qty4,

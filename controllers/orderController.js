@@ -30,16 +30,23 @@ async function create(req, res) {}
 async function store(req, res) {
   const userId = req.params.userId;
   const { products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
-  const order = await Order.create({
-    products,
-    subTotalPrice,
-    taxes,
-    totalAmount,
-    status,
-    address,
-    userId: userId,
-  });
-  res.status(201).json(order);
+  if (!products || !totalAmount || !address) {
+    return res.json({ err: "err", message: "Faltan campos requeridos" });
+  }
+  try {
+    const order = await Order.create({
+      products,
+      subTotalPrice,
+      taxes,
+      totalAmount,
+      status,
+      address,
+      userId: userId,
+    });
+    res.status(201).json(order);
+  } catch (error) {
+    return res.status(400).json({ err: "err", message: error.message });
+  }
 }
 
 // Show the form for editing the specified resource.

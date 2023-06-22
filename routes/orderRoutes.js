@@ -5,7 +5,7 @@ const verifyToken = require("../middlewares/verifyToken");
 const isAdmin = require("../middlewares/isAdmin");
 const atLeastOwner = require("../middlewares/atLeastOwner");
 
-// router.use(verifyToken);
+router.use(verifyToken);
 
 router.get("/", orderController.index);
 router.get("/:userId", atLeastOwner, orderController.show);
