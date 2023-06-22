@@ -23,6 +23,20 @@ async function show(req, res) {
     res.status(500).json({ error: "Error al obtener las órdenes" });
   }
 }
+
+// Muestra ordenes de un usuario
+async function showOrder(req, res) {
+  const orderId = req.params.orderId;
+
+  try {
+    const order = await Order.findByPk(orderId);
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener la órden" });
+  }
+}
+
 // Show the form for creating a new resource
 async function create(req, res) {}
 
@@ -85,6 +99,7 @@ async function destroy(req, res) {
 module.exports = {
   index,
   show,
+  showOrder,
   create,
   store,
   edit,
