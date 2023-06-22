@@ -3,7 +3,14 @@ const formidable = require("formidable");
 
 async function index(req, res) {
   const categories = await Category.findAll({
-    include: [{ model: Product, attributes: ["id", "name"] }],
+    where: { active: true },
+    include: { model: Product, attributes: ["id", "name", "active"] },
+  });
+  res.json(categories);
+}
+async function indexAdmin(req, res) {
+  const categories = await Category.findAll({
+    include: { model: Product, attributes: ["id", "name", "active"] },
   });
   res.json(categories);
 }
@@ -17,7 +24,6 @@ async function show(req, res) {
     });
     res.json(category.products);
   } catch {
-    //const products = await Product.findAll();
     res.json({ type: "err", content: "No existen productos para la categoria seleccionada" });
   }
 }
@@ -29,7 +35,6 @@ async function showCategory(req, res) {
     });
     res.json(category);
   } catch {
-    //const products = await Product.findAll();
     res.json({ type: "err", content: "No existen productos para la categoria seleccionada" });
   }
 }
@@ -58,12 +63,20 @@ async function update(req, res) {
 
     form.parse(req, async (err, fields, files) => {
       const { name, active } = fields;
-      console.log(files);
+      //console.log(files);
       const category = await Category.findByPk(categoryId);
       if (!category) {
         return res.json({ error: "Category not found" });
       }
+      if (active === "false") {
+        const products = await Product.findAll({ where: { categoryId } });
+        console.log(products);
 
+        for (const product of products) {
+          product.active = false;
+          await product.save();
+        }
+      }
       name && name !== category.name && (category.name = name);
       active && active !== category.active && (category.active = active);
 
@@ -94,6 +107,7 @@ async function destroy(req, res) {
 
 module.exports = {
   index,
+  indexAdmin,
   show,
   showCategory,
   create,

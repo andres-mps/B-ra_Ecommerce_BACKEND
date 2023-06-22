@@ -5,18 +5,22 @@ module.exports = async () => {
   const categories = [
     {
       name: "IPA",
+      active: true,
       image: "hoppy-beers.webp",
     },
     {
       name: "Sour",
+      active: true,
       image: "sours2.webp",
     },
     {
       name: "Stout",
+      active: true,
       image: "collection-toolnatur_f033ba0c-a0d6-43ca-b8a1-fb03ef2ebc25.webp",
     },
     {
       name: "Lager & Pilsner",
+      active: true,
       image: "pilsner.webp",
     },
   ];

@@ -3,6 +3,13 @@ const formidable = require("formidable");
 
 async function index(req, res) {
   const products = await Product.findAll({
+    where: { active: true },
+    include: [{ model: Category, attributes: ["id", "name"] }],
+  });
+  res.json(products);
+}
+async function indexAdmin(req, res) {
+  const products = await Product.findAll({
     include: [{ model: Category, attributes: ["id", "name"] }],
   });
   res.json(products);
@@ -122,6 +129,7 @@ async function destroy(req, res) {
 
 module.exports = {
   index,
+  indexAdmin,
   show,
   indexFeatured,
   create,
