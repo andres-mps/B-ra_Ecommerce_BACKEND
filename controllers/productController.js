@@ -38,6 +38,7 @@ async function store(req, res) {
     });
 
     form.parse(req, async (err, fields, files) => {
+      console.log(err);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
       console.log(files);
@@ -57,8 +58,9 @@ async function store(req, res) {
       await newProduct.save();
       res.json(newProduct);
     });
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
   }
 }
 

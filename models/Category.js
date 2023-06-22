@@ -18,6 +18,10 @@ class Category extends Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
+        active: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
         slug: {
           type: DataTypes.STRING,
         },
