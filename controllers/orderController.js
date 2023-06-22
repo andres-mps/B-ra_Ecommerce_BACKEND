@@ -1,4 +1,5 @@
-const { Order, User } = require("../models");
+const { Order, User, Product } = require("../models");
+const { findByPk } = require("../models/User");
 
 // Muestra todas las ordenes
 async function index(req, res) {
@@ -46,6 +47,18 @@ async function store(req, res) {
   const { products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
   if (!products || !totalAmount || !address) {
     return res.json({ err: "err", message: "Faltan campos requeridos" });
+  }
+  for (const product of products) {
+    const productToControl = await Product.findByPk(product.id);
+    const stockControl = productToControl.stock - product.qty;
+    if (stockControl < 0) {
+      return res.json({
+        err: "err",
+        message: `El producto ${product.name} solo tiene ${productToControl.stock} unidades en Stock. Modifica tu compra y vuelve a intentarlo`,
+      });
+    }
+    productToControl.stock = productToControl.stock - product.qty;
+    await productToControl.save();
   }
   try {
     const order = await Order.create({
