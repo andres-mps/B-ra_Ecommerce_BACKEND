@@ -9,6 +9,13 @@ class Order extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
+        code: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: true,
+          },
+        },
         products: {
           type: DataTypes.JSON,
           allowNull: false,

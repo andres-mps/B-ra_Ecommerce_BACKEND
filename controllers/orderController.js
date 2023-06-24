@@ -44,8 +44,8 @@ async function create(req, res) {}
 // Store a newly created resource in storage.
 async function store(req, res) {
   const userId = req.params.userId;
-  const { products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
-  if (!products || !totalAmount || !address) {
+  const { code, products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
+  if (!products || !totalAmount || !address || !code) {
     return res.json({ err: "err", message: "required fields missing" });
   }
   for (const product of products) {
@@ -62,6 +62,7 @@ async function store(req, res) {
   }
   try {
     const order = await Order.create({
+      code,
       products,
       subTotalPrice,
       taxes,
