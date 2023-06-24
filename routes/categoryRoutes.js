@@ -10,7 +10,7 @@ router.get("/:category", categoryController.show);
 //Ruta para obtener info de una categoria al edit
 router.get("/admin/:category", categoryController.showCategory);
 //Ruta para crear categoria
-router.post("/create", categoryController.create);
+router.post("/admin/create", categoryController.store);
 //Ruta para actualizar una categoria
 router.patch("/admin/update/:category", categoryController.update);
 //Ruta para eliminar una categoria

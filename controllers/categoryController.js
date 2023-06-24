@@ -39,17 +39,33 @@ async function showCategory(req, res) {
   }
 }
 
-async function create(req, res) {
-  const category = await Category.create({
-    name: req.body.name,
-    image: req.body.image,
-  });
-  return res.json("creada");
+async function store(req, res) {
+  console.log("llega");
+  try {
+    const form = formidable({
+      multiples: true,
+      uploadDir: __dirname + "/../public/img",
+      keepExtensions: true,
+    });
+
+    form.parse(req, async (err, fields, files) => {
+      console.log(err);
+      const { name, active, slug } = fields;
+      console.log(files);
+      const newCategory = new Category({
+        name,
+        image: files.image.newFilename,
+        active,
+        slug,
+      });
+      await newCategory.save();
+      res.json(newCategory);
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err.message });
+  }
 }
-
-async function store(req, res) {}
-
-async function edit(req, res) {}
 
 async function update(req, res) {
   const categoryId = req.params.category;
@@ -110,9 +126,7 @@ module.exports = {
   indexAdmin,
   show,
   showCategory,
-  create,
   store,
-  edit,
   update,
   destroy,
 };
