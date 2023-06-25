@@ -14,6 +14,6 @@ router.post("/admin/create", categoryController.store);
 //Ruta para actualizar una categoria
 router.patch("/admin/update/:category", categoryController.update);
 //Ruta para eliminar una categoria
-router.delete("/:id", categoryController.destroy);
+router.delete("/admin/:id", categoryController.destroy);
 
 module.exports = router;
