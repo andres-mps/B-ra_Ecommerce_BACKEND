@@ -113,7 +113,10 @@ async function destroy(req, res) {
     if (!category) {
       return res.status(404).json({ error: "Categoría no encontrada" });
     }
+    const products = await Product.findAll({ where: { categoryId: category.id } });
+    await Promise.all(products.map((product) => product.update({ active: false })));
     await category.destroy();
+    await Promise.all([category.save(), ...products.map((product) => product.save())]);
     res.json({ message: "Categoría eliminada exitosamente" });
   } catch (error) {
     console.error(error);
