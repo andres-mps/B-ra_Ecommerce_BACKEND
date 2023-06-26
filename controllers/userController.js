@@ -24,7 +24,7 @@ async function store(req, res) {
     });
     return res.json(user);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.json({ err: "err", message: "Failed to register. Try again with another email" });
   }
 }
 
@@ -45,7 +45,7 @@ async function update(req, res) {
     lastname && lastname !== user.lastname && (user.lastname = lastname);
     email && email !== user.email && (user.email = email);
 
-    const match = await user.comparePassword(password);
+    const match = password ? await user.comparePassword(password) : true;
     password && !match && (user.password = password);
 
     address !== user.address && (user.address = address);
@@ -54,7 +54,7 @@ async function update(req, res) {
     await user.save();
     return res.json(user);
   } catch (err) {
-    return res.json(err);
+    return res.json({ err: "err", message: "failed to upload. Try again" });
   }
 }
 
