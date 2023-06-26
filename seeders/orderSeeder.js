@@ -1,12 +1,19 @@
 const { User, Product, Order } = require("../models");
+const nanoidModule = import("nanoid");
 
 module.exports = async () => {
   const users = await User.findAll();
   const products = await Product.findAll();
   const orders = [];
+  const nanoid = (await nanoidModule).customAlphabet(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.",
+    10,
+  );
 
   for (const user of users) {
     if (user.firstname !== "Unknown") {
+      const code1 = await nanoid();
+      const code2 = await nanoid();
       const qty = Math.floor(Math.random() * 10) + 1;
       const qty2 = Math.floor(Math.random() * 10) + 1;
       const qty3 = Math.floor(Math.random() * 10) + 1;
@@ -18,6 +25,7 @@ module.exports = async () => {
       const statusList = ["Pending", "In progress", "Delivered"];
       orders.push(
         {
+          code: code1,
           products: [
             {
               ...products[product].dataValues,
@@ -43,6 +51,7 @@ module.exports = async () => {
           userId: user.id,
         },
         {
+          code: code2,
           products: [
             {
               ...products[product3].dataValues,
