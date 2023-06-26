@@ -23,6 +23,11 @@ module.exports = async () => {
       active: true,
       image: "pilsner.webp",
     },
+    {
+      name: "Unknown",
+      active: false,
+      image: "",
+    },
   ];
 
   categories.forEach((category) => {
