@@ -68,10 +68,10 @@ async function destroy(req, res) {
     },
   });
   if (!user) {
-    return res.json("Usuario no encontrado");
+    return res.json({ err: "err", message: "Usuario no encontrado" });
   }
   if (user.firstname === "Unknown") {
-    return res.json("No puedes eliminar el usuario unknown");
+    return res.json({ err: "err", message: "No puedes eliminar el usuario unknown" });
   }
 
   const userOrders = user.orders;
@@ -91,7 +91,7 @@ async function destroy(req, res) {
 
     return res.json("Usuario actualizado  y eliminado correctamente.");
   } catch (err) {
-    return res.json(err);
+    return res.json({ err: "err", message: "failed to destroy. Try again" });
   }
 }
 

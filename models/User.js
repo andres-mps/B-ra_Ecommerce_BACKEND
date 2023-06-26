@@ -60,7 +60,6 @@ class User extends Model {
           },
           beforeUpdate: async (user, options) => {
             if (user.changed("password")) {
-              console.log("cambió la password");
               const hashedPassword = await bcrypt.hash(user.password, 5);
               user.password = hashedPassword;
             }
