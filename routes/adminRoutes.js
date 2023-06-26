@@ -9,8 +9,10 @@ const adminController = require("../controllers/adminController");
 // router.use(verifyToken);
 // router.use(isAdmin);
 router.get("/", adminController.index);
-router.post("/", adminController.store);
-router.patch("/:id", adminController.update);
+
+router.get("/:id", adminController.indexAdmin);
+router.post("/create", adminController.store);
+router.patch("/update/:id", adminController.update);
 router.delete("/:id", adminController.destroy);
 
 module.exports = router;
