@@ -8,6 +8,12 @@ async function index(req, res) {
   return res.json(admin);
 }
 
+async function indexAdmin(req, res) {
+  const id = req.params.id;
+  const admin = await Admin.findByPk(id);
+  return res.json(admin);
+}
+
 // Display the specified resource.
 async function show(req, res) {}
 
@@ -44,30 +50,37 @@ async function edit(req, res) {}
 
 // Update the specified resource in storage.
 async function update(req, res) {
-  const { firstname, lastname, email, password } = req.body;
   try {
-    const admin = await Admin.findByPk(req.params.id);
-    if (!admin) {
-      return res.json("Admin no encontrado");
-    }
+    const form = formidable({
+      multiples: true,
+      keepExtensions: true,
+    });
 
-    if (firstname && firstname !== admin.firstname) {
-      admin.firstname = firstname;
-    }
-    if (lastname && lastname !== admin.lastname) {
-      admin.lastname = lastname;
-    }
-    if (email && email !== admin.email) {
-      admin.email = email;
-    }
+    form.parse(req, async (err, fields, files) => {
+      const { firstname, lastname, email, password } = fields;
+      //console.log(files);
+      const admin = await Admin.findByPk(req.params.id);
+      if (!admin) {
+        return res.json("Admin no encontrado");
+      }
 
-    const match = await admin.comparePassword(password);
-    if (password && !match) {
-      admin.password = password;
-    }
+      if (firstname && firstname !== admin.firstname) {
+        admin.firstname = firstname;
+      }
+      if (lastname && lastname !== admin.lastname) {
+        admin.lastname = lastname;
+      }
+      if (email && email !== admin.email) {
+        admin.email = email;
+      }
+      // const match = await admin.comparePassword(password);
+      // if (password && !match) {
+      //   admin.password = password;
+      // }
 
-    await admin.save();
-    return res.json(admin);
+      await admin.save();
+      return res.json(admin);
+    });
   } catch (err) {
     console.log({ "Error al actualizar el admin": err });
     res.json(err);
@@ -108,6 +121,7 @@ async function token(req, res) {
 
 module.exports = {
   index,
+  indexAdmin,
   show,
   create,
   store,

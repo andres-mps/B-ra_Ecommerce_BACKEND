@@ -7,9 +7,9 @@ const isOwner = require("../middlewares/isOwner");
 router.post("/token", userController.token);
 router.post("/", userController.store);
 
-//router.use(verifyToken);
+router.use(verifyToken);
 
-router.patch("/:id", /*isOwner,*/ userController.update);
-router.delete("/:id", /*isOwner,*/ userController.destroy);
+router.patch("/:id", isOwner, userController.update);
+router.delete("/:id", isOwner, userController.destroy);
 
 module.exports = router;
