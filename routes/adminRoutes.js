@@ -4,7 +4,7 @@ const adminController = require("../controllers/adminController");
 // const verifyToken = require("../middlewares/verifyToken");
 // const isAdmin = require("../middlewares/isAdmin");
 
-// router.post("/token", adminController.token);
+router.post("/token", adminController.token);
 
 // router.use(verifyToken);
 // router.use(isAdmin);
