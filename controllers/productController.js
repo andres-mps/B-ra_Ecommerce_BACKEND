@@ -48,7 +48,7 @@ async function store(req, res) {
       console.log(err);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
-      console.log(files);
+      console.log(files.mainImage);
       const newProduct = new Product({
         name,
         description,
@@ -74,7 +74,7 @@ async function store(req, res) {
 // Update the specified resource in storage.
 async function update(req, res) {
   const productId = req.params.product;
-  console.log(req.params.id);
+  // console.log(req.params.id);
   try {
     const form = formidable({
       multiples: true,
@@ -85,6 +85,8 @@ async function update(req, res) {
     form.parse(req, async (err, fields, files) => {
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
+
+      console.log(files.mainImage);
 
       const product = await Product.findByPk(productId);
       if (!product) {
@@ -102,7 +104,13 @@ async function update(req, res) {
       categoryId && categoryId !== product.categoryId && (product.categoryId = categoryId);
       slug && slug !== product.slug && (product.slug = slug);
 
-      files.image && files.image !== product.image && (product.image = files.image.newFilename);
+      files.mainImage &&
+        files.mainImage !== product.image.main &&
+        (product.image.main = files.mainImage.newFilename);
+
+      files.altImage &&
+        files.altImage !== product.image.main &&
+        (product.image.main = files.altImage.newFilename);
 
       await product.save();
       res.json(product);
