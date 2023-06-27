@@ -48,8 +48,8 @@ async function update(req, res) {
     const match = password ? await user.comparePassword(password) : true;
     password && !match && (user.password = password);
 
-    address !== user.address && (user.address = address);
-    phone !== user.phone && (user.phone = phone);
+    address !== user.address && address !== undefined && (user.address = address);
+    phone !== user.phone && address !== undefined && (user.phone = phone);
 
     await user.save();
     return res.json(user);
