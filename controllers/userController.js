@@ -48,8 +48,8 @@ async function update(req, res) {
     const match = password ? await user.comparePassword(password) : true;
     password && !match && (user.password = password);
 
-    address !== user.address && (user.address = address);
-    phone !== user.phone && (user.phone = phone);
+    address !== user.address && address !== undefined && (user.address = address);
+    phone !== user.phone && address !== undefined && (user.phone = phone);
 
     await user.save();
     return res.json(user);
@@ -68,10 +68,10 @@ async function destroy(req, res) {
     },
   });
   if (!user) {
-    return res.json("Usuario no encontrado");
+    return res.json({ err: "err", message: "Usuario no encontrado" });
   }
   if (user.firstname === "Unknown") {
-    return res.json("No puedes eliminar el usuario unknown");
+    return res.json({ err: "err", message: "No puedes eliminar el usuario unknown" });
   }
 
   const userOrders = user.orders;
@@ -91,7 +91,7 @@ async function destroy(req, res) {
 
     return res.json("Usuario actualizado  y eliminado correctamente.");
   } catch (err) {
-    return res.json(err);
+    return res.json({ err: "err", message: "failed to destroy. Try again" });
   }
 }
 
