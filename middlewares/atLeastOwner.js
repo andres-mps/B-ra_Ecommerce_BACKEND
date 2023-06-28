@@ -3,7 +3,7 @@ function atLeastOwner(req, res, next) {
     return next();
   }
 
-  if (req.auth.id === req.params.userId) {
+  if (Number(req.auth.id) === Number(req.params.userId)) {
     return next();
   }
 
