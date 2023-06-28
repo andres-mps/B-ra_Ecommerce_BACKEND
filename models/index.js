@@ -1,11 +1,10 @@
 const { Sequelize } = require("sequelize");
 
-// TODO - boorrar si funciona lo anterior
+// TODO - boorrar si funciona lo previo
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
-  sequelizeOptions,
   {
     host: process.env.DB_HOST,
     dialect: process.env.DB_CONNECTION,
