@@ -132,6 +132,20 @@ module.exports = async () => {
       categoryId: "3",
     },
     {
+      name: "Chitfaced",
+      description:
+        "An absolute unit of an IPA. We’ve beefed up this brew so much it was cast in the latest Marvel movie. Packed to surface tension with Chit malt: a pale malt that gives a great thickness and texture, without the caramel flavors that sometimes accompany it. Super thick, crisp, and smooooooth as silk.",
+      abv: "7.5%",
+      size: "44 CL",
+      stock: 56,
+      price: 25,
+      image: { main: "Chitfaced.webp", alt: "Chitfaced-side.webp" },
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "1",
+    },
+    {
       name: "Peel the burn",
       description:
         "This is an imperial stout with eight different types of malt that pushes all the boundaries - a little bit sweet, a little bit smoky, a little roasty, and a lot of chocolate with added roasted orange peel and cardamom.",
@@ -183,6 +197,20 @@ module.exports = async () => {
       stock: 100,
       price: 28,
       image: { main: "45Days-India-Pale-Lager.webp" },
+      featured: false,
+      active: true,
+      slug: "",
+      categoryId: "4",
+    },
+    {
+      name: "Das Kølich",
+      description:
+        "A traditional bright and easy-drinking top fermented German-style ale; crisp, clean, and balanced with an exceptionally delicate and refreshing finish. The taste is slightly fruity from fermentation and has a medium-low bitterness that adds a pleasant dryness and subtle crispiness. On the nose, you get a light clean malt character, and hints of fruit, copper, and bread are noticeable. Overall a clean, crisp, delicately balanced, and refreshing beer!",
+      abv: "5.5%",
+      size: "44 CL",
+      stock: 22,
+      price: 38,
+      image: { main: "DasKolich.webp", alt: "DasKolich-side.webp" },
       featured: false,
       active: true,
       slug: "",

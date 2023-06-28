@@ -48,7 +48,12 @@ async function store(req, res) {
       console.log(err);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
-      console.log(files.mainImage);
+
+      let mainNew = "";
+      let altNew = "";
+      files.mainImage ? (mainNew = files.mainImage.newFilename) : (mainNew = "");
+      files.altImage ? (altNew = files.altImage.newFilename) : (altNew = "");
+
       const newProduct = new Product({
         name,
         description,
@@ -56,7 +61,7 @@ async function store(req, res) {
         size,
         stock,
         price,
-        image: files.image.newFilename,
+        image: { main: mainNew, alt: altNew },
         featured,
         active,
         slug,
@@ -74,7 +79,6 @@ async function store(req, res) {
 // Update the specified resource in storage.
 async function update(req, res) {
   const productId = req.params.product;
-  // console.log(req.params.id);
   try {
     const form = formidable({
       multiples: true,
@@ -83,10 +87,9 @@ async function update(req, res) {
     });
 
     form.parse(req, async (err, fields, files) => {
+      console.log(files.mainImage);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
-
-      console.log(files.mainImage);
 
       const product = await Product.findByPk(productId);
       if (!product) {
@@ -104,13 +107,11 @@ async function update(req, res) {
       categoryId && categoryId !== product.categoryId && (product.categoryId = categoryId);
       slug && slug !== product.slug && (product.slug = slug);
 
-      files.mainImage &&
-        files.mainImage !== product.image.main &&
-        (product.image.main = files.mainImage.newFilename);
-
-      files.altImage &&
-        files.altImage !== product.image.main &&
-        (product.image.main = files.altImage.newFilename);
+      let main = "";
+      let alt = "";
+      files.mainImage ? (main = files.mainImage.newFilename) : (main = product.image.main);
+      files.altImage ? (alt = files.altImage.newFilename) : (alt = product.image.alt);
+      product.image = { main: main, alt: alt };
 
       await product.save();
       res.json(product);
