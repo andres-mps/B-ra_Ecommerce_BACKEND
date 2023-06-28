@@ -25,12 +25,11 @@ async function show(req, res) {
 }
 
 async function indexFeatured(req, res) {
-  res.json("hola");
-
-  // const products = await Product.findAll({
-  //   // where: { featured: TRUE },
-  //   include: { model: Category, attributes: ["id", "name"] },
-  // });
+  const products = await Product.findAll({
+    // where: { featured: TRUE },
+    include: { model: Category, attributes: ["id", "name"] },
+  });
+  res.json(products);
 }
 
 // Show the form for creating a new resource
