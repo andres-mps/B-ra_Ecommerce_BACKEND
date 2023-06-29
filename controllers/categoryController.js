@@ -5,12 +5,14 @@ async function index(req, res) {
   const categories = await Category.findAll({
     where: { active: true },
     include: { model: Product, attributes: ["id", "name", "active"] },
+    order: [["id", "ASC"]],
   });
   res.json(categories);
 }
 async function indexAdmin(req, res) {
   const categories = await Category.findAll({
     include: { model: Product, attributes: ["id", "name", "active"] },
+    order: [["id", "ASC"]],
   });
   res.json(categories);
 }
@@ -40,7 +42,7 @@ async function showCategory(req, res) {
 }
 
 async function store(req, res) {
-  console.log("llega");
+  //console.log("llega");
   try {
     const form = formidable({
       multiples: true,

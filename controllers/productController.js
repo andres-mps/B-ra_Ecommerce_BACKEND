@@ -8,12 +8,14 @@ async function index(req, res) {
   const products = await Product.findAll({
     where: { active: true },
     include: [{ model: Category, attributes: ["id", "name"] }],
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
 async function indexAdmin(req, res) {
   const products = await Product.findAll({
     include: [{ model: Category, attributes: ["id", "name"] }],
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
@@ -31,6 +33,7 @@ async function indexFeatured(req, res) {
   const products = await Product.findAll({
     where: { featured: true },
     include: { model: Category, attributes: ["id", "name"] },
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
