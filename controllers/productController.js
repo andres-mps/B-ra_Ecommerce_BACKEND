@@ -44,11 +44,9 @@ async function create(req, res) {}
 // Store a newly created resource in storage.
 async function store(req, res) {
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
   try {
     const form = formidable({
       multiples: true,
-      uploadDir: __dirname + "/../public/img",
       keepExtensions: true,
     });
 
@@ -56,11 +54,6 @@ async function store(req, res) {
       console.log(err);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
-
-      // let mainNew = "";
-      // let altNew = "";
-      // files.mainImage ? (mainNew = files.mainImage.newFilename) : (mainNew = "");
-      // files.altImage ? (altNew = files.altImage.newFilename) : (altNew = "");
 
       let mainNew = "";
       let altNew = "";
@@ -77,7 +70,7 @@ async function store(req, res) {
             duplex: "half",
           });
       } else {
-        mainNew = product.image.main;
+        mainNew = "";
       }
 
       if (files.altImage) {
@@ -93,7 +86,7 @@ async function store(req, res) {
             duplex: "half",
           });
       } else {
-        altNew = product.image.alt;
+        altNew = "";
       }
 
       const newProduct = new Product({
