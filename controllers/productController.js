@@ -1,5 +1,8 @@
 const { Product, Category } = require("../models");
 const formidable = require("formidable");
+const { createClient } = require("@supabase/supabase-js");
+const fs = require("fs");
+const path = require("path");
 
 async function index(req, res) {
   const products = await Product.findAll({
@@ -37,6 +40,8 @@ async function create(req, res) {}
 
 // Store a newly created resource in storage.
 async function store(req, res) {
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
   try {
     const form = formidable({
       multiples: true,
@@ -49,10 +54,44 @@ async function store(req, res) {
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
 
+      // let mainNew = "";
+      // let altNew = "";
+      // files.mainImage ? (mainNew = files.mainImage.newFilename) : (mainNew = "");
+      // files.altImage ? (altNew = files.altImage.newFilename) : (altNew = "");
+
       let mainNew = "";
       let altNew = "";
-      files.mainImage ? (mainNew = files.mainImage.newFilename) : (mainNew = "");
-      files.altImage ? (altNew = files.altImage.newFilename) : (altNew = "");
+      if (files.mainImage) {
+        const ext = path.extname(files.mainImage.filepath);
+        const newFileName = `image_main_${Date.now()}${ext}`;
+        mainNew = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.mainImage.mimetype,
+            duplex: "half",
+          });
+      } else {
+        mainNew = product.image.main;
+      }
+
+      if (files.altImage) {
+        const ext = path.extname(files.altImage.filepath);
+        const newFileName = `image_alt_${Date.now()}${ext}`;
+        altNew = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.altImage.mimetype,
+            duplex: "half",
+          });
+      } else {
+        altNew = product.image.alt;
+      }
 
       const newProduct = new Product({
         name,
@@ -78,16 +117,16 @@ async function store(req, res) {
 
 // Update the specified resource in storage.
 async function update(req, res) {
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
   const productId = req.params.product;
   try {
     const form = formidable({
       multiples: true,
-      uploadDir: __dirname + "/../public/img",
       keepExtensions: true,
     });
 
     form.parse(req, async (err, fields, files) => {
-      console.log(files.mainImage);
       const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
         fields;
 
@@ -109,8 +148,38 @@ async function update(req, res) {
 
       let main = "";
       let alt = "";
-      files.mainImage ? (main = files.mainImage.newFilename) : (main = product.image.main);
-      files.altImage ? (alt = files.altImage.newFilename) : (alt = product.image.alt);
+      if (files.mainImage) {
+        const ext = path.extname(files.mainImage.filepath);
+        const newFileName = `image_main_${Date.now()}${ext}`;
+        main = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.mainImage.mimetype,
+            duplex: "half",
+          });
+      } else {
+        main = product.image.main;
+      }
+
+      if (files.altImage) {
+        const ext = path.extname(files.altImage.filepath);
+        const newFileName = `image_alt_${Date.now()}${ext}`;
+        alt = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.altImage.mimetype,
+            duplex: "half",
+          });
+      } else {
+        alt = product.image.alt;
+      }
+
       product.image = { main: main, alt: alt };
 
       await product.save();
