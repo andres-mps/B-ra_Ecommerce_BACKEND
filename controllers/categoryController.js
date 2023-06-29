@@ -1,5 +1,8 @@
 const { Category, Product } = require("../models");
 const formidable = require("formidable");
+const { createClient } = require("@supabase/supabase-js");
+const fs = require("fs");
+const path = require("path");
 
 async function index(req, res) {
   const categories = await Category.findAll({
@@ -40,21 +43,36 @@ async function showCategory(req, res) {
 }
 
 async function store(req, res) {
-  console.log("llega");
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
   try {
     const form = formidable({
       multiples: true,
-      uploadDir: __dirname + "/../public/img",
       keepExtensions: true,
     });
 
     form.parse(req, async (err, fields, files) => {
       console.log(err);
       const { name, active, slug } = fields;
-      console.log(files);
+
+      if (files.image) {
+        const ext = path.extname(files.image.filepath);
+        const newFileName = `image_${Date.now()}${ext}`;
+        image = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.image.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.image.mimetype,
+            duplex: "half",
+          });
+      } else {
+        image = "";
+      }
+
       const newCategory = new Category({
         name,
-        image: files.image.newFilename,
+        image: image,
         active,
         slug,
       });
@@ -68,18 +86,18 @@ async function store(req, res) {
 }
 
 async function update(req, res) {
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
   const categoryId = req.params.category;
 
   try {
     const form = formidable({
       multiples: true,
-      uploadDir: __dirname + "/../public/img",
       keepExtensions: true,
     });
 
     form.parse(req, async (err, fields, files) => {
       const { name, active } = fields;
-      //console.log(files);
+
       const category = await Category.findByPk(categoryId);
       if (!category) {
         return res.json({ error: "Category not found" });
@@ -95,8 +113,24 @@ async function update(req, res) {
       }
       name && name !== category.name && (category.name = name);
       active && active !== category.active && (category.active = active);
+      console.log(files.image);
+      if (files.image) {
+        const ext = path.extname(files.image.filepath);
+        const newFileName = `image_${Date.now()}${ext}`;
+        image = newFileName;
+        const { data, error } = await supabase.storage
+          .from("images")
+          .upload(newFileName, fs.createReadStream(files.image.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.image.mimetype,
+            duplex: "half",
+          });
+      } else {
+        image = category.image;
+      }
 
-      files.image && files.image !== category.image && (category.image = files.image.newFilename);
+      category.image = image;
 
       await category.save();
       res.json(category);
