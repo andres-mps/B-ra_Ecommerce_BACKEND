@@ -38,7 +38,7 @@ async function update(req, res) {
     const user = await User.findOne({ where: { id: req.params.id } });
 
     if (!user) {
-      return res.json("Usuario no encontrado");
+      return res.json("User not found");
     }
 
     firstname && firstname !== user.firstname && (user.firstname = firstname);
@@ -54,7 +54,7 @@ async function update(req, res) {
     await user.save();
     return res.json(user);
   } catch (err) {
-    return res.json({ err: "err", message: "failed to upload. Try again" });
+    return res.json({ err: "err", message: "Couldn't upload, try again" });
   }
 }
 
@@ -68,10 +68,10 @@ async function destroy(req, res) {
     },
   });
   if (!user) {
-    return res.json({ err: "err", message: "Usuario no encontrado" });
+    return res.json({ err: "err", message: "User not found" });
   }
   if (user.firstname === "Unknown") {
-    return res.json({ err: "err", message: "No puedes eliminar el usuario unknown" });
+    return res.json({ err: "err", message: "User unknown cannot be deleted" });
   }
 
   const userOrders = user.orders;
@@ -89,9 +89,9 @@ async function destroy(req, res) {
 
     await User.destroy({ where: { id: req.params.id } }); //actualizar con paranoid
 
-    return res.json("Usuario actualizado  y eliminado correctamente.");
+    return res.json("User updated and removed successfully");
   } catch (err) {
-    return res.json({ err: "err", message: "failed to destroy. Try again" });
+    return res.json({ err: "err", message: "Failed to destroy. Try again" });
   }
 }
 
@@ -100,11 +100,11 @@ async function token(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email: email } });
   if (!user) {
-    return res.json("Credenciales incorrectas");
+    return res.json("Please check your credentials and try again.");
   }
   const match = await user.comparePassword(password);
   if (!match) {
-    return res.json("Credenciales incorrectas");
+    return res.json("Please check your credentials and try again.");
   }
 
   const token = jwt.sign({ id: user.id, role: "user" }, process.env.SESSION_SECRET);

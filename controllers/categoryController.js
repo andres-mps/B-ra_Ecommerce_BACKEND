@@ -29,7 +29,7 @@ async function show(req, res) {
     });
     res.json(category.products);
   } catch {
-    res.json({ type: "err", content: "No existen productos para la categoria seleccionada" });
+    res.json({ type: "err", content: "There are no products in the selected category" });
   }
 }
 async function showCategory(req, res) {
@@ -154,10 +154,10 @@ async function destroy(req, res) {
     await Promise.all(products.map((product) => product.update({ active: false, categoryId: 5 })));
     await category.destroy();
     await Promise.all([category.save(), ...products.map((product) => product.save())]);
-    res.json({ message: "Categoría eliminada exitosamente" });
+    res.json({ message: "Category successfully removed" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error al eliminar la categoría" });
+    res.status(500).json({ error: "Error deleting category" });
   }
 }
 

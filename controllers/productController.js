@@ -195,7 +195,7 @@ async function destroy(req, res) {
         id: productId,
       },
     });
-    res.json({ message: "Producto eliminado correctamente" });
+    res.json({ message: "Product successfully removed" });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
