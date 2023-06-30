@@ -5,6 +5,7 @@ const { findByPk } = require("../models/User");
 async function index(req, res) {
   const orders = await Order.findAll({
     include: [{ model: User, attributes: ["firstname", "lastname", "email"] }],
+    order: [["createdAt", "DESC"]],
   });
   res.json(orders);
 }
