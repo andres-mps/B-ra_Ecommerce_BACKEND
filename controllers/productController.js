@@ -31,7 +31,7 @@ async function show(req, res) {
 
 async function indexFeatured(req, res) {
   const products = await Product.findAll({
-    where: { featured: true },
+    where: { featured: true, active: true },
     include: { model: Category, attributes: ["id", "name"] },
     order: [["id", "ASC"]],
   });
