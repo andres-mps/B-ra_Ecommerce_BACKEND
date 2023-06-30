@@ -10,7 +10,7 @@ module.exports = async () => {
   users.push({
     firstname: "Unknown",
     lastname: "Unknown",
-    email: "Unknown@Unknown",
+    email: "unknown@unknown.com",
     password: passwordHashed,
     address: "Unknown",
     phone: "099000000",

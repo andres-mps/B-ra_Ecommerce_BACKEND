@@ -47,32 +47,32 @@ async function showCategory(req, res) {
 async function store(req, res) {
   //console.log("llega");
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-  try {
-    const form = formidable({
-      multiples: true,
-      keepExtensions: true,
-    });
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+  });
 
-    form.parse(req, async (err, fields, files) => {
-      console.log(err);
-      const { name, active, slug } = fields;
+  form.parse(req, async (err, fields, files) => {
+    console.log(err);
+    const { name, active, slug } = fields;
 
-      if (files.image) {
-        const ext = path.extname(files.image.filepath);
-        const newFileName = `image_${Date.now()}${ext}`;
-        image = newFileName;
-        const { data, error } = await supabase.storage
-          .from("images")
-          .upload(newFileName, fs.createReadStream(files.image.filepath), {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: files.image.mimetype,
-            duplex: "half",
-          });
-      } else {
-        image = "";
-      }
+    if (files.image) {
+      const ext = path.extname(files.image.filepath);
+      const newFileName = `image_${Date.now()}${ext}`;
+      image = newFileName;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(newFileName, fs.createReadStream(files.image.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.image.mimetype,
+          duplex: "half",
+        });
+    } else {
+      image = "";
+    }
 
+    try {
       const newCategory = new Category({
         name,
         image: image,
@@ -81,11 +81,13 @@ async function store(req, res) {
       });
       await newCategory.save();
       res.json(newCategory);
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: err.message });
-  }
+    } catch (err) {
+      return res.json({
+        err: "err",
+        message: "Failed to create. Plase try again with another name",
+      });
+    }
+  });
 }
 
 async function update(req, res) {
@@ -103,11 +105,17 @@ async function update(req, res) {
 
       const category = await Category.findByPk(categoryId);
       if (!category) {
-        return res.json({ error: "Category not found" });
+        return res.json({ err: "err", message: "Category not found" });
+      }
+      if (category.name === "Unknown") {
+        return res.json({
+          err: "err",
+          message: "This category cannot be modified",
+        });
       }
       if (active === "false") {
         const products = await Product.findAll({ where: { categoryId } });
-        console.log(products);
+        //console.log(products);
 
         for (const product of products) {
           product.active = false;
@@ -139,7 +147,10 @@ async function update(req, res) {
       res.json(category);
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.json({
+      err: "err",
+      message: "Failed to update. Plase try again",
+    });
   }
 }
 
@@ -148,7 +159,13 @@ async function destroy(req, res) {
   try {
     const category = await Category.findByPk(id);
     if (!category) {
-      return res.status(404).json({ error: "Categoría no encontrada" });
+      return res.json({ err: "err", message: "Category not found" });
+    }
+    if (category.name === "Unknown") {
+      return res.json({
+        err: "err",
+        message: "This category cannot be deleted",
+      });
     }
     const products = await Product.findAll({ where: { categoryId: category.id } });
     await Promise.all(products.map((product) => product.update({ active: false, categoryId: 5 })));
@@ -157,7 +174,10 @@ async function destroy(req, res) {
     res.json({ message: "Category successfully removed" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error deleting category" });
+    res.json({
+      err: "err",
+      message: "Failed to delete. Plase try again",
+    });
   }
 }
 

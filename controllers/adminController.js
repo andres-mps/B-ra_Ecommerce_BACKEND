@@ -40,7 +40,7 @@ async function store(req, res) {
       return res.json("Admin created successfully");
     } catch (err) {
       console.log({ "Failed to register admin": err });
-      res.json(err);
+      res.json({ err: "err", message: "Try again with another email" });
     }
   });
 }
@@ -61,7 +61,13 @@ async function update(req, res) {
       //console.log(files);
       const admin = await Admin.findByPk(req.params.id);
       if (!admin) {
-        return res.json("Admin not found");
+        return res.json({ err: "err", message: "Admin not found" });
+      }
+      if (admin.email === "admin@gmail.com") {
+        return res.json({
+          err: "err",
+          message: "This admin cannot be modified",
+        });
       }
 
       if (firstname && firstname !== admin.firstname) {
@@ -77,28 +83,43 @@ async function update(req, res) {
       // if (password && !match) {
       //   admin.password = password;
       // }
+      const match = password ? await admin.comparePassword(password) : true;
+      password && !match && (admin.password = password);
 
       await admin.save();
       return res.json(admin);
     });
   } catch (err) {
     console.log({ "Error updating admin": err });
-    res.json(err);
+    res.json({ err: "err", message: "Failed to upload, try again" });
   }
 }
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   try {
-    const admin = await Admin.destroy({
+    const admin = await Admin.findByPk(req.params.id);
+    if (!admin) {
+      return res.json({ err: "err", message: "Admin not found" });
+    }
+    if (admin.email === "admin@gmail.com") {
+      return res.json({
+        err: "err",
+        message: "This admin cannot be deleted",
+      });
+    }
+    await Admin.destroy({
       where: {
         id: req.params.id,
       },
     });
-    return res.json("Se ha eliminado un admin");
+    return res.json("Admin deleted successfully");
   } catch (err) {
     console.log({ "Error al eliminar un admin": err });
-    res.json(err);
+    res.json({
+      err: "err",
+      message: "Cannot delete Admin. Please try again",
+    });
   }
 }
 
@@ -107,11 +128,11 @@ async function token(req, res) {
   const { email, password } = req.body;
   const admin = await Admin.findOne({ where: { email: email } });
   if (!admin) {
-    return res.json("Credenciales incorrectas");
+    return res.json({ err: "err", message: "Please check your credentials and try again." });
   }
   const match = await admin.comparePassword(password);
   if (!match) {
-    return res.json("Credenciales incorrectas");
+    return res.json({ err: "err", message: "Please check your credentials and try again." });
   }
 
   const token = jwt.sign({ id: admin.id, role: "admin" }, process.env.SESSION_SECRET);

@@ -49,9 +49,11 @@ class Admin extends Model {
             const hashedPassword = await bcrypt.hash(admin.password, 5);
             admin.password = hashedPassword;
           },
-          beforeUpdate: async (admin, options) => {
-            const hashedPassword = await bcrypt.hash(admin.password, 5);
-            admin.password = hashedPassword;
+          beforeUpdate: async (user, options) => {
+            if (user.changed("password")) {
+              const hashedPassword = await bcrypt.hash(user.password, 5);
+              user.password = hashedPassword;
+            }
           },
         },
       },

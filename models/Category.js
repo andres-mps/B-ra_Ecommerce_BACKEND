@@ -13,6 +13,10 @@ class Category extends Model {
         name: {
           type: DataTypes.STRING,
           allowNull: false,
+          unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
         image: {
           type: DataTypes.STRING,
@@ -24,6 +28,11 @@ class Category extends Model {
         },
         slug: {
           type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+          validate: {
+            notEmpty: true,
+          },
         },
       },
       {

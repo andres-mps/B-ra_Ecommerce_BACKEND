@@ -35,10 +35,17 @@ async function edit(req, res) {}
 async function update(req, res) {
   const { firstname, lastname, email, password, address, phone } = req.body;
   try {
-    const user = await User.findOne({ where: { id: req.params.id } });
-
+    //const user = await User.findOne({ where: { id: req.params.id } });
+    const user = await User.findByPk(req.params.id);
     if (!user) {
-      return res.json("User not found");
+      return res.json({ err: "err", message: "User not found" });
+    }
+
+    if (user.email === "unknown@unknown.com" || user.email === "maria@gmail.com") {
+      return res.json({
+        err: "err",
+        message: "This user cannot be modified. Register a new user to try this feature",
+      });
     }
 
     firstname && firstname !== user.firstname && (user.firstname = firstname);
@@ -54,7 +61,7 @@ async function update(req, res) {
     await user.save();
     return res.json(user);
   } catch (err) {
-    return res.json({ err: "err", message: "Couldn't upload, try again" });
+    return res.json({ err: "err", message: "Failed to upload, try again" });
   }
 }
 
@@ -70,15 +77,18 @@ async function destroy(req, res) {
   if (!user) {
     return res.json({ err: "err", message: "User not found" });
   }
-  if (user.firstname === "Unknown") {
-    return res.json({ err: "err", message: "User unknown cannot be deleted" });
+  if (user.email === "unknown@unknown.com" || user.email === "maria@gmail.com") {
+    return res.json({
+      err: "err",
+      message: "This user cannot be deleted. Register a new user to try this feature",
+    });
   }
 
   const userOrders = user.orders;
 
   try {
     const unknown = await User.findOne({
-      where: { firstname: "Unknown" },
+      where: { email: "unknown@unknown.com" },
     }); //Creado desde los seeders
 
     await Promise.all(
@@ -87,9 +97,9 @@ async function destroy(req, res) {
       }),
     );
 
-    await User.destroy({ where: { id: req.params.id } }); //actualizar con paranoid
+    await User.destroy({ where: { id: req.params.id } });
 
-    return res.json("User updated and removed successfully");
+    return res.json("User deleted successfully");
   } catch (err) {
     return res.json({ err: "err", message: "Failed to destroy. Try again" });
   }
@@ -100,11 +110,11 @@ async function token(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email: email } });
   if (!user) {
-    return res.json("Please check your credentials and try again.");
+    return res.json({ err: "err", message: "Please check your credentials and try again." });
   }
   const match = await user.comparePassword(password);
   if (!match) {
-    return res.json("Please check your credentials and try again.");
+    return res.json({ err: "err", message: "Please check your credentials and try again." });
   }
 
   const token = jwt.sign({ id: user.id, role: "user" }, process.env.SESSION_SECRET);
