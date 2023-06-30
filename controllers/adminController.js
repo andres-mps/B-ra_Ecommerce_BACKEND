@@ -37,9 +37,9 @@ async function store(req, res) {
         password,
       });
       await admin.save();
-      return res.json("Se ha creado un nuevo admin");
+      return res.json("Admin created successfully");
     } catch (err) {
-      console.log({ "Error al registrar un admin": err });
+      console.log({ "Failed to register admin": err });
       res.json(err);
     }
   });
@@ -61,7 +61,7 @@ async function update(req, res) {
       //console.log(files);
       const admin = await Admin.findByPk(req.params.id);
       if (!admin) {
-        return res.json("Admin no encontrado");
+        return res.json("Admin not found");
       }
 
       if (firstname && firstname !== admin.firstname) {
@@ -82,7 +82,7 @@ async function update(req, res) {
       return res.json(admin);
     });
   } catch (err) {
-    console.log({ "Error al actualizar el admin": err });
+    console.log({ "Error updating admin": err });
     res.json(err);
   }
 }

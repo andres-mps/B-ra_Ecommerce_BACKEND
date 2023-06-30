@@ -21,7 +21,7 @@ async function show(req, res) {
 
     res.json(orders);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener las órdenes" });
+    res.status(500).json({ error: "Error getting orders" });
   }
 }
 
@@ -34,7 +34,7 @@ async function showOrder(req, res) {
 
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener la órden" });
+    res.status(500).json({ error: "Error getting the order" });
   }
 }
 
@@ -46,7 +46,7 @@ async function store(req, res) {
   const userId = req.params.userId;
   const { code, products, subTotalPrice, taxes, totalAmount, status, address } = req.body;
   if (!products || !totalAmount || !address || !code) {
-    return res.json({ err: "err", message: "required fields missing" });
+    return res.json({ err: "err", message: "Missing required fields" });
   }
   for (const product of products) {
     const productToControl = await Product.findByPk(product.id);
@@ -107,7 +107,7 @@ async function destroy(req, res) {
     },
   });
 
-  res.json({ message: "Orden eliminada correctamente" });
+  res.json({ message: "Order successfully deleted" });
 }
 
 module.exports = {

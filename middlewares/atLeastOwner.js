@@ -7,6 +7,6 @@ function atLeastOwner(req, res, next) {
     return next();
   }
 
-  return res.json("usuario no autorizado");
+  return res.json("Unauthorized user.");
 }
 module.exports = atLeastOwner;

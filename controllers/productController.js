@@ -8,12 +8,14 @@ async function index(req, res) {
   const products = await Product.findAll({
     where: { active: true },
     include: [{ model: Category, attributes: ["id", "name"] }],
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
 async function indexAdmin(req, res) {
   const products = await Product.findAll({
     include: [{ model: Category, attributes: ["id", "name"] }],
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
@@ -31,6 +33,7 @@ async function indexFeatured(req, res) {
   const products = await Product.findAll({
     where: { featured: true },
     include: { model: Category, attributes: ["id", "name"] },
+    order: [["id", "ASC"]],
   });
   res.json(products);
 }
@@ -192,7 +195,7 @@ async function destroy(req, res) {
         id: productId,
       },
     });
-    res.json({ message: "Producto eliminado correctamente" });
+    res.json({ message: "Product successfully removed" });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
