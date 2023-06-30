@@ -15,7 +15,15 @@ module.exports = async () => {
     address: "Unknown",
     phone: "099000000",
   });
-  for (let i = 1; i < 30; i++) {
+  users.push({
+    firstname: "Maria",
+    lastname: "Pérez",
+    email: "maria@gmail.com",
+    password: passwordHashed,
+    address: "18 Julio 1932",
+    phone: "099000000",
+  });
+  for (let i = 1; i < 29; i++) {
     users.push({
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),

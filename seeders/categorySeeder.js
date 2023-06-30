@@ -26,7 +26,7 @@ module.exports = async () => {
     {
       name: "Unknown",
       active: false,
-      image: "",
+      image: "category_unknown.jpg",
     },
   ];
 
