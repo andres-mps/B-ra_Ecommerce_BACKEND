@@ -29,7 +29,7 @@ async function show(req, res) {
     });
     res.json(category.products);
   } catch {
-    res.json({ type: "err", content: "There are no products in the selected category" });
+    res.json({ type: "err", content: "There are no products in the selected category" }); 
   }
 }
 async function showCategory(req, res) {
