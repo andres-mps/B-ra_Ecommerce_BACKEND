@@ -27,9 +27,9 @@ async function show(req, res) {
       where: { slug: params },
       include: { model: Product },
     });
-    res.json(category.products);
+    return res.json(category.products);
   } catch {
-    res.json({ type: "err", content: "There are no products in the selected category" }); 
+    return res.json({ type: "err", content: "There are no products in the selected category" });
   }
 }
 async function showCategory(req, res) {
@@ -38,9 +38,9 @@ async function showCategory(req, res) {
     const category = await Category.findOne({
       where: { slug: params },
     });
-    res.json(category);
+    return res.json(category);
   } catch {
-    res.json({ type: "err", content: "No existen productos para la categoria seleccionada" });
+    return res.json({ type: "err", content: "There are no products in the selected category" });
   }
 }
 

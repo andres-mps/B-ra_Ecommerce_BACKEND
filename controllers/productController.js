@@ -26,7 +26,10 @@ async function show(req, res) {
     where: { slug: params },
     include: { model: Category, attributes: ["id", "name"] },
   });
-  res.json(product);
+  if (!product) {
+    return res.json({ err: "err", message: "product not abailable" });
+  }
+  return res.json(product);
 }
 
 async function indexFeatured(req, res) {
@@ -44,51 +47,57 @@ async function create(req, res) {}
 // Store a newly created resource in storage.
 async function store(req, res) {
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-  try {
-    const form = formidable({
-      multiples: true,
-      keepExtensions: true,
-    });
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+  });
 
-    form.parse(req, async (err, fields, files) => {
-      console.log(err);
-      const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
-        fields;
+  form.parse(req, async (err, fields, files) => {
+    //console.log(err);
+    if (err) {
+      return res.json({
+        err: "err",
+        message: "Failed to create. Try again filling all the fields or with another name",
+      });
+    }
+    const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
+      fields;
 
-      let mainNew = "";
-      let altNew = "";
-      if (files.mainImage) {
-        const ext = path.extname(files.mainImage.filepath);
-        const newFileName = `image_main_${Date.now()}${ext}`;
-        mainNew = newFileName;
-        const { data, error } = await supabase.storage
-          .from("images")
-          .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: files.mainImage.mimetype,
-            duplex: "half",
-          });
-      } else {
-        mainNew = "";
-      }
+    let mainNew = "";
+    let altNew = "";
+    if (files.mainImage) {
+      const ext = path.extname(files.mainImage.filepath);
+      const newFileName = `image_main_${Date.now()}${ext}`;
+      mainNew = newFileName;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.mainImage.mimetype,
+          duplex: "half",
+        });
+    } else {
+      mainNew = "";
+    }
 
-      if (files.altImage) {
-        const ext = path.extname(files.altImage.filepath);
-        const newFileName = `image_alt_${Date.now()}${ext}`;
-        altNew = newFileName;
-        const { data, error } = await supabase.storage
-          .from("images")
-          .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: files.altImage.mimetype,
-            duplex: "half",
-          });
-      } else {
-        altNew = "";
-      }
+    if (files.altImage) {
+      const ext = path.extname(files.altImage.filepath);
+      const newFileName = `image_alt_${Date.now()}${ext}`;
+      altNew = newFileName;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.altImage.mimetype,
+          duplex: "half",
+        });
+    } else {
+      altNew = "";
+    }
 
+    try {
       const newProduct = new Product({
         name,
         description,
@@ -103,12 +112,15 @@ async function store(req, res) {
         categoryId,
       });
       await newProduct.save();
-      res.json(newProduct);
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: err.message });
-  }
+      return res.json(newProduct);
+    } catch (err) {
+      //console.log(err);
+      return res.json({
+        err: "err",
+        message: "Failed to create. Try again filling all the fields or with another name",
+      });
+    }
+  });
 }
 
 // Update the specified resource in storage.
@@ -116,74 +128,77 @@ async function update(req, res) {
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
   const productId = req.params.product;
-  try {
-    const form = formidable({
-      multiples: true,
-      keepExtensions: true,
-    });
 
-    form.parse(req, async (err, fields, files) => {
-      const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
-        fields;
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+  });
 
-      const product = await Product.findByPk(productId);
-      if (!product) {
-        return res.json({ error: "Product not found" });
-      }
+  form.parse(req, async (err, fields, files) => {
+    const { name, description, abv, size, stock, price, featured, active, slug, categoryId } =
+      fields;
 
-      name && name !== product.name && (product.name = name);
-      description && description !== product.description && (product.description = description);
-      abv && abv !== product.abv && (product.abv = abv);
-      size && size !== product.size && (product.size = size);
-      stock && stock !== product.stock && (product.stock = stock);
-      price && price !== product.price && (product.price = price);
-      featured && featured !== product.featured && (product.featured = featured);
-      active && active !== product.active && (product.active = active);
-      categoryId && categoryId !== product.categoryId && (product.categoryId = categoryId);
-      slug && slug !== product.slug && (product.slug = slug);
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      return res.json({ error: "Product not found" });
+    }
 
-      let main = "";
-      let alt = "";
-      if (files.mainImage) {
-        const ext = path.extname(files.mainImage.filepath);
-        const newFileName = `image_main_${Date.now()}${ext}`;
-        main = newFileName;
-        const { data, error } = await supabase.storage
-          .from("images")
-          .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: files.mainImage.mimetype,
-            duplex: "half",
-          });
-      } else {
-        main = product.image.main;
-      }
+    name && name !== product.name && (product.name = name);
+    description && description !== product.description && (product.description = description);
+    abv && abv !== product.abv && (product.abv = abv);
+    size && size !== product.size && (product.size = size);
+    stock && stock !== product.stock && (product.stock = stock);
+    price && price !== product.price && (product.price = price);
+    featured && featured !== product.featured && (product.featured = featured);
+    active && active !== product.active && (product.active = active);
+    categoryId && categoryId !== product.categoryId && (product.categoryId = categoryId);
+    slug && slug !== product.slug && (product.slug = slug);
 
-      if (files.altImage) {
-        const ext = path.extname(files.altImage.filepath);
-        const newFileName = `image_alt_${Date.now()}${ext}`;
-        alt = newFileName;
-        const { data, error } = await supabase.storage
-          .from("images")
-          .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: files.altImage.mimetype,
-            duplex: "half",
-          });
-      } else {
-        alt = product.image.alt;
-      }
+    let main = "";
+    let alt = "";
+    if (files.mainImage) {
+      const ext = path.extname(files.mainImage.filepath);
+      const newFileName = `image_main_${Date.now()}${ext}`;
+      main = newFileName;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(newFileName, fs.createReadStream(files.mainImage.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.mainImage.mimetype,
+          duplex: "half",
+        });
+    } else {
+      main = product.image.main;
+    }
 
-      product.image = { main: main, alt: alt };
+    if (files.altImage) {
+      const ext = path.extname(files.altImage.filepath);
+      const newFileName = `image_alt_${Date.now()}${ext}`;
+      alt = newFileName;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(newFileName, fs.createReadStream(files.altImage.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.altImage.mimetype,
+          duplex: "half",
+        });
+    } else {
+      alt = product.image.alt;
+    }
 
+    product.image = { main: main, alt: alt };
+    try {
       await product.save();
       res.json(product);
-    });
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
-  }
+    } catch (error) {
+      return res.json({
+        err: "err",
+        message: "Failed to upload. Try again",
+      });
+    }
+  });
 }
 
 // Remove the specified resource from storage.
@@ -197,7 +212,10 @@ async function destroy(req, res) {
     });
     res.json({ message: "Product successfully removed" });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.json({
+      err: "err",
+      message: "Failed to delete. Try again",
+    });
   }
 }
 
